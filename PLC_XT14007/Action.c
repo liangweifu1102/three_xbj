@@ -33,7 +33,7 @@ PowerDownSaveStrct CurDistanceSave;
 
 
 unsigned short cRunDistStep;
-
+void aotu_run(void);
 void ReadRobotCurrent(void);
 void KeyBoardProc(void);
 void UserKeyBoardProc(void);
@@ -59,7 +59,21 @@ unsigned long dwAutoStepResetDlay = 0;
 /************************************************/
 void Action(void)
 {
+   OncePowerResume();
+   ReadRobotCurrent();
    ManualAction();
+   aotu_run();
+   KeyBoardProc();
+   ResumeLocation();
+   AlarmProtect();
+   SaveSetParamToFlash();
+}
+/*****************************/
+/*
+  自动运行程序
+*/
+void aotu_run(void)
+{
 
 }
 /************************************************/
