@@ -161,7 +161,7 @@ extern WORD_BITS RunAtcion;
 #define  bDotMVST		M10 //点动
 #define  bZDotMVST		M11 //点动
 #define  bContues		M12 //一次，连续
-#define  bContuesST	M13 //一次，连续
+#define  bContuesST             M13 //一次，连续
 #define  bTest			M14
 
 #define  bRunDIST_St		M20
