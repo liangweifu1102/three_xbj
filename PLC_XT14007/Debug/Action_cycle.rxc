@@ -1,0 +1,8 @@
+-cpu=rx600
+-lang=c
+-include="D:\RX600\ChaYinJi-ThreeAxisTB6600\src"
+-include="D:\RX600\ChaYinJi-ThreeAxisTB6600\TwoAxisControl"
+-output=obj="D:\RX600\ChaYinJi-ThreeAxisTB6600\TwoAxisControl\Debug\Action_cycle.obj"
+-debug
+"D:\RX600\ChaYinJi-ThreeAxisTB6600\src\Action_cycle.c"
+-nologo

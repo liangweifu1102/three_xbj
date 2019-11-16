@@ -1,0 +1,6 @@
+-cpu=rx600
+-lang=c
+-output=obj="E:\李哥\湘虹铣边机两轴\NCXibianJiSingle\V1.1\xibianjiv_1.0\PLC_XT14007\Debug\SPIFlash_W25Q.obj"
+-debug
+"E:\李哥\湘虹铣边机两轴\NCXibianJiSingle\V1.1\xibianjiv_1.0\PLC_XT14007\SPIFlash_W25Q.c"
+-nologo

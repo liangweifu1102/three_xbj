@@ -1,0 +1,8 @@
+-cpu=rx600
+-lang=c
+-include="D:\RX600\DuanZhiJi\DongDuanDaWang\src"
+-include="D:\RX600\DuanZhiJi\DongDuanDaWang\TwoAxisControl"
+-output=obj="D:\RX600\DuanZhiJi\DongDuanDaWang\TwoAxisControl\Debug\Action_cycle121130.obj"
+-debug
+"D:\RX600\DuanZhiJi\DongDuanDaWang\src\Action_cycle121130.c"
+-nologo

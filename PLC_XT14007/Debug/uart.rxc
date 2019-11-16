@@ -1,0 +1,6 @@
+-cpu=rx600
+-lang=c
+-output=obj="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\uart.obj"
+-debug
+"E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\uart.c"
+-nologo

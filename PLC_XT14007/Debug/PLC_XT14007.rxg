@@ -1,0 +1,4 @@
+-cpu=rx600
+-output="E:\Àî¸ç\ÏæºçÏ³±ß»úÁ½Öá\NCXibianJiSingle\V1.1\xibianjiv_1.0\PLC_XT14007\Debug\PLC_XT14007.lib"
+-lang=c99
+-head=runtime,math,stdio,stdlib,string,new

@@ -1,0 +1,4 @@
+-cpu=rx600
+-output="D:\RX600\BanZiDong\TwoAxisControl\Debug\TwoAxisControl.lib"
+-lang=c99
+-head=runtime,math,stdio,stdlib,string,new

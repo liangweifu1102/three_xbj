@@ -1,0 +1,8 @@
+---- MV_Set_Dec Matches (7 in 4 files) ----
+ManualProc.c (plc_xt14007):            MV_Set_Dec(X_AXIS, 300);
+MenInit.c (plc_xt14007):      MV_Set_Dec(X_AXIS, 300);
+MenInit.c (plc_xt14007):      MV_Set_Dec(Y_AXIS, 150);
+MenInit.c (plc_xt14007):      MV_Set_Dec(Z_AXIS, 150);
+MenInit.c (plc_xt14007):      MV_Set_Dec(U_AXIS, 200);
+ServoDrv.c (plc_xt14007):void MV_Set_Dec(unsigned short axis,unsigned short wdata)
+ServoDrv.h (plc_xt14007):extern void MV_Set_Dec(unsigned short axis,unsigned short wdata);
