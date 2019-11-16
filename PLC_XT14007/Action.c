@@ -176,7 +176,8 @@ void KeyBoardProc(void)
     if(cAlarmFlag > 0)
     {
         cAlarmFlag= 0;
-      
+
+      cResumeStep=0;
       bRBOrigin = 0;
       bAutoStart = 0;
       bAutoStop = 0;
@@ -270,6 +271,9 @@ void UserKeyBoardProc(void)
 /************************************************/
 void ResumeLocation(void)
 {
+
+   TestData->testdata[0]=cResumeStep;
+   TestData->testdata[1]=cResumeStep;
    if (bResume)
    {
       if (cResumeStep == 1)
@@ -296,7 +300,7 @@ void ResumeLocation(void)
             bRBOrigin = 1;
             bYRst = 1;
             bZRst = 1;
-            bXRst = 1;
+            bXRst = 0;
             cXRstStep = 0;
             cYRstStep = 1;
             cZRstStep = 1;
@@ -453,8 +457,8 @@ void AlarmProtect(void)
    }
    if (AxisNum > 1)
    {
-      /*
-      if(Y_HLMTN)
+      
+      /*if(Y_HLMTN)
       {	
               SystemParam->AlarmCode=5;
               if(bRunning)
@@ -463,8 +467,8 @@ void AlarmProtect(void)
                       MV_Dec_Stop(Y_AXIS);
                       cRunStep=0;
               }
-      } 
-      */
+      }*/ 
+      
       if(Y_HLMTP)
       {
           SystemParam->AlarmCode=5;
@@ -643,7 +647,7 @@ void AlarmProtect(void)
       }
    }
 
-   if (StopperOrign == StopperValve ||
+ /*  if (StopperOrign == StopperValve ||
        StopperLmt != StopperValve)
    {
       if (alarmTick1 < dwTickCount)
@@ -658,7 +662,7 @@ void AlarmProtect(void)
       alarmTick1 = dwTickCount  + 5000;
       if (SystemParam->AlarmCode == 28) 
         SystemParam->AlarmCode = 0;
-   }
+   }*/
 
 /*
    if (MillingLmt != MillingValve || MillingOrign == MillingValve)

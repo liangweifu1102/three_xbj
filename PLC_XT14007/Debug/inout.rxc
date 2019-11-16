@@ -1,6 +1,6 @@
 -cpu=rx600
 -lang=c
--output=obj="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\inout.obj"
+-output=obj="F:\www\three_axis\PLC_XT14007\Debug\inout.obj"
 -debug
-"E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\inout.c"
+"F:\www\three_axis\PLC_XT14007\inout.c"
 -nologo

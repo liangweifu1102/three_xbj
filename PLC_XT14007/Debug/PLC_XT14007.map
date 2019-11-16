@@ -1,37 +1,37 @@
-Optimizing Linkage Editor (V.10.02.00.000)        18-May-2018 18:02:03
+Optimizing Linkage Editor (V.10.02.00.000)        16-Nov-2019 16:41:10
 
 *** Options ***
 
--subcommand=E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\PLC_XT14007.hlk
+-subcommand=F:\www\three_axis\PLC_XT14007\Debug\PLC_XT14007.hlk
 -noprelink
 -rom=D=R,D_1=R_1,D_2=R_2
 -nomessage
--list="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\PLC_XT14007.map"
+-list="F:\www\three_axis\PLC_XT14007\Debug\PLC_XT14007.map"
 -nooptimize
 -start=B_1,R_1,B_2,R_2,B,R,SU,SI/00,PResetPRG/0FFFC0000,C_1,C_2,C,C$*,D_1,D_2,D,P,PIntPRG,W*,L/0FFFD0000,FIXEDVECT/0FFFFFFD0
 -nologo
--input="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\24c04.obj"
--input="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\Action.obj"
--input="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\AutoRunProc.obj"
--input="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\dbsct.obj"
--input="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\hwsetup.obj"
--input="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\inout.obj"
--input="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\intprg.obj"
--input="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\main.obj"
--input="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\ManualProc.obj"
--input="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\MenInit.obj"
--input="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\modbusASC.obj"
--input="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\PWM.obj"
--input="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\resetprg.obj"
--input="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\sbrk.obj"
--input="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\ServoDrv.obj"
--input="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\SPI_viaRSPI.obj"
--input="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\SPIFlash_W25Q.obj"
--input="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\Timer.obj"
--input="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\uart.obj"
--input="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\vecttbl.obj"
--library="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\PLC_XT14007.lib"
--output="E:\RX621\定做机\xibianjiv_1.0\PLC_XT14007\Debug\PLC_XT14007.abs"
+-input="F:\www\three_axis\PLC_XT14007\Debug\24c04.obj"
+-input="F:\www\three_axis\PLC_XT14007\Debug\Action.obj"
+-input="F:\www\three_axis\PLC_XT14007\Debug\AutoRunProc.obj"
+-input="F:\www\three_axis\PLC_XT14007\Debug\dbsct.obj"
+-input="F:\www\three_axis\PLC_XT14007\Debug\hwsetup.obj"
+-input="F:\www\three_axis\PLC_XT14007\Debug\inout.obj"
+-input="F:\www\three_axis\PLC_XT14007\Debug\intprg.obj"
+-input="F:\www\three_axis\PLC_XT14007\Debug\main.obj"
+-input="F:\www\three_axis\PLC_XT14007\Debug\ManualProc.obj"
+-input="F:\www\three_axis\PLC_XT14007\Debug\MenInit.obj"
+-input="F:\www\three_axis\PLC_XT14007\Debug\modbusASC.obj"
+-input="F:\www\three_axis\PLC_XT14007\Debug\PWM.obj"
+-input="F:\www\three_axis\PLC_XT14007\Debug\resetprg.obj"
+-input="F:\www\three_axis\PLC_XT14007\Debug\sbrk.obj"
+-input="F:\www\three_axis\PLC_XT14007\Debug\ServoDrv.obj"
+-input="F:\www\three_axis\PLC_XT14007\Debug\SPI_viaRSPI.obj"
+-input="F:\www\three_axis\PLC_XT14007\Debug\SPIFlash_W25Q.obj"
+-input="F:\www\three_axis\PLC_XT14007\Debug\Timer.obj"
+-input="F:\www\three_axis\PLC_XT14007\Debug\uart.obj"
+-input="F:\www\three_axis\PLC_XT14007\Debug\vecttbl.obj"
+-library="F:\www\three_axis\PLC_XT14007\Debug\PLC_XT14007.lib"
+-output="F:\www\three_axis\PLC_XT14007\Debug\PLC_XT14007.abs"
 -end
 
 *** Error information ***
@@ -53,11 +53,11 @@ R_2
 B
                                   000058e0  00005ef7       618   4
 R
-                                  00005ef8  00005f1b        24   4
+                                  00005ef8  00005f17        20   4
 SU
-                                  00005f1c  0000601b       100   4
+                                  00005f18  00006017       100   4
 SI
-                                  0000601c  0000631b       300   4
+                                  00006018  00006317       300   4
 PResetPRG
                                   fffc0000  fffc0034        35   1
 C_1
@@ -77,16 +77,16 @@ D_1
 D_2
                                   fffd067e  fffd0687         a   2
 D
-                                  fffd0688  fffd06ab        24   4
+                                  fffd0688  fffd06a7        20   4
 P
-                                  fffd06ac  fffd8058      79ad   1
+                                  fffd06a8  fffd8038      7991   1
 PIntPRG
-                                  fffd8059  fffd8196       13e   1
+                                  fffd8039  fffd8176       13e   1
 W_1
-                                  fffd8197  fffd8197         0   1
+                                  fffd8177  fffd8177         0   1
 W_2
-                                  fffd8198  fffd81c9        32   2
+                                  fffd8178  fffd81a9        32   2
 W
-                                  fffd81cc  fffd81cc         0   4
+                                  fffd81ac  fffd81ac         0   4
 FIXEDVECT
                                   ffffffd0  ffffffff        30   4

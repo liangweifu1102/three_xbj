@@ -147,7 +147,7 @@ extern WORD_BITS RunAtcion;
 #define Y_Origin_Speed  300
 #define Z_Origin_Speed  300
 #define U_Origin_Speed  300
-//M0~M31为系统应用位
+//M0~M31为系统应用
 #define  bRunning		M00 //运行中
 #define  bStart			M01 //启动
 #define  bResume		M02	//复位中	
@@ -167,11 +167,15 @@ extern WORD_BITS RunAtcion;
 #define  bRunDIST_St		M20
 #define  bRunDIST		M21
 
-//M32~95为手动轴及手动输出位
-#define  bMVXp			M01 //X-
-#define  bMVXn			M00//X+
-#define  bMVYp			M02 //X-
-#define  bMVYn			M03//X+
+#define bModel1			M22
+#define bModel2			M23
+#define bModel3			M24
+#define bModel4			M25
+
+#define  bMVXp			M32  
+#define  bMVXn			M33
+#define  bMVYp			M34 
+#define  bMVYn			M35  
 #define  bMVZp			M36
 #define  bMVZn			M37
 #define  bMVUp			M38
@@ -185,26 +189,28 @@ extern WORD_BITS RunAtcion;
 #define  bUoriginST	M46
 #define  bUorigin		M47
 
-//M60~95为手动输出位
-#define bModel1			M22
-#define bModel2			M23
-#define bModel3			M24
-#define bModel4			M25
-//M160~M192为输入位显示
-#define X_Origin			I011
-#define Y_Origin			I003
-#define Z_Origin			I014
-#define U_Origin			X37
+#define bFirstWorkDisp_ST      M51
+#define bAlarmCode27    M52
+#define bAlarmCode29    M53
 
-#define X_HLMTP_IN			X12
-#define Y_HLMTP_IN			X04
-#define Z_HLMTP_IN			X13
-#define U_HLMTP_IN			X35
+#define bCurrentMode       M52 // 0  手动  1 准备状态
+#define bCurrentMode_ST    M53
 
-#define	 X_SAlarm_In		X27
-#define	 Y_SAlarm_In		X26
-#define	 Z_SAlarm_In		X25
-#define	 U_SAlarm_In		X34
+#define bTrimingSelect          M54   //修边工作
+#define bTrimingSelect_ST       M55   //修边工作
+#define bDrillingSelect         M56   //锯料工作
+#define bDrillingSelect_ST      M57
+#define bFirstWorkSelect         M58   // 0  先修后钻 1 先钻后修
+#define bFirstWorkSelect_ST      M59
+
+
+
+#define MillingMotor_ST           M60  //铣电机
+#define DrillMotor_ST             M61  //铣电机
+#define StopperValve_ST           M67  //档料
+#define PressValve_ST            M68  //压料
+
+
 
 #define EMG_STOP			X01 //急停
 #define AUTORUN_IN			X00 //启动
@@ -227,11 +233,23 @@ extern WORD_BITS RunAtcion;
 #define DrillingLmt              X04// X17 //钻限位
 #define DrillingOrign            X03//    X20 //钻原点
 #define OilSgn                   X10
+#define	 U_SAlarm_In		X34
 
-#define MillingMotor_ST           M60  //铣电机
-#define DrillMotor_ST             M61  //铣电机
-#define StopperValve_ST           M67  //档料
-#define PressValve_ST            M68  //压料
+//M160~M192为输入位显示
+#define X_Origin			I011
+#define Y_Origin			I003
+#define Z_Origin			I014
+#define U_Origin			X37
+
+#define X_HLMTP_IN			X12
+#define Y_HLMTP_IN			X04
+#define Z_HLMTP_IN			X13
+#define U_HLMTP_IN			X35
+
+#define	 X_SAlarm_In		X27
+#define	 Y_SAlarm_In		X26
+#define	 Z_SAlarm_In		X25
+
 
 #define MillingMotor             Y00  //铣电机
 #define DrillMotor               Y01  //铣电机
@@ -252,19 +270,6 @@ extern WORD_BITS RunAtcion;
 
 //#define bAlarmFlag      M50
 
-#define bAlarmCode27    M52
-#define bAlarmCode29    M53
-
-#define bCurrentMode    M52 // 0  手动  1 准备状态
-#define bCurrentMode_ST    M53
-
-#define bTrimingSelect          M54   //修边工作
-#define bTrimingSelect_ST       M55   //修边工作
-#define bDrillingSelect         M56   //锯料工作
-#define bDrillingSelect_ST      M57
-#define bFirstWorkSelect         M58   // 0  先修后钻 1 先钻后修
-#define bFirstWorkSelect_ST      M59
-#define bFirstWorkDisp_ST      M51
 
 #define TrimingSoftOrign  FactoryParam->TrimingDeepthOrign - (UserParam->TrimingRadius / 2) - UserParam->StopperShift
 #define DrillingSoftOrign  FactoryParam->DrillDeepthOrign - UserParam->DrillKnifeLength - UserParam->StopperShift
