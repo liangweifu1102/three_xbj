@@ -753,6 +753,16 @@ void SaveSetParamToFlash(void)
       }
 
    }
+   if (clear_param)
+   {
+      clear_param=0;
+      for (i=0; i<20; i++)
+      {
+         FactoryParam->Slot_Orign[i] = 0;
+         FactoryParam->Slot_Length[i] = 0;
+         UserParam->Slot_Depth[i] = 0;
+      }
+   }
    if (bReadParam)
    {
       bReadParam = 0;

@@ -1,23 +1,24 @@
 #ifndef ACTION_H
 #define ACTION_H
 #pragma pack
+
 typedef struct _SystemParamStrct_
 {
-    long	XDistance; //0		
+    long	XDistance;      //0		
     long	YDistance;	//2/
-	long	ZDistance;	//4// 		
+    long	ZDistance;	//4// 		
     long	UDistance;	//6//
-	unsigned long Proctotal;//8//
+    unsigned long  Proctotal;//8//
     unsigned short ManuSpeed;//10
-	unsigned short DotDistance;//11
-	unsigned short AlarmCode;//12
-	unsigned short RunState; //13
-	unsigned short ReadNum;	  //14
-	unsigned short WriteNum; //15
-	unsigned short DrillIdleSpeed; //16
-	unsigned short IdleSpeed;  //17
-	unsigned short MillingWorkSpeed;//18
-        unsigned short DrillWorkSpeed;//19
+    unsigned short DotDistance;//11
+    unsigned short AlarmCode;//12
+    unsigned short RunState; //13
+    unsigned short ReadNum;	  //14
+    unsigned short WriteNum; //15
+    unsigned short DrillIdleSpeed; //16
+    unsigned short IdleSpeed;  //17
+    unsigned short MillingWorkSpeed;//18
+    unsigned short DrillWorkSpeed;//19
 
 }SystemParamStrct;
 typedef struct _FactoryParamStrct_
@@ -50,25 +51,11 @@ typedef struct _FactoryParamStrct_
     unsigned short Slot_Orign[20];//60  槽中槽起点
     unsigned short Slot_Length[20];//80  槽中槽长度  已满
 }FactoryParamStrct;
-typedef struct _MortorParamStrct_
-{
-	unsigned short XCirclingPulse; //240
-	unsigned short XMoveDist;      //241
-	unsigned short XMotorSpeed;    //242
-	unsigned short YCirclingPulse; //243
-	unsigned short YMoveDist;      //244
-	unsigned short YMotorSpeed;    //245
-	unsigned short ZCirclingPulse; //246
-	unsigned short ZMoveDist;//247
-	unsigned short ZMotorSpeed;	
-	unsigned short UCirclingPulse;	
-	unsigned short UMoveDist;
-	unsigned short UMotorSpeed;
-}MortorParamStrct;
+
 typedef struct _UserParamStrct_
 {
-         long   TrimingLength; //100 修边长度
-	 long   TrimingDeepth;
+        long   TrimingLength; //100 修边长度
+	long   TrimingDeepth;
 	unsigned short  WorksDeltaSite[20]; //104 距0点距离		
 	unsigned short  WorksLength[20];    //124 长度，不为0的时候是槽	
 	unsigned short  WorksDepth[20];     //144 深度, 不能为0	
@@ -104,21 +91,39 @@ typedef struct _UserParamStrct_
         unsigned short  DrillKnifeLength;//203
         unsigned short  TrimingKnifeRadius;//204
         unsigned short  res1[15];//
-        unsigned short Slot_Depth[20];//220  槽中槽深度度  已满
+        unsigned short  Slot_Depth[20];//220  槽中槽深度度  已满
 
 }UserParamStrct;
 
+typedef struct _MortorParamStrct_
+{
+	unsigned short XCirclingPulse; //240
+	unsigned short XMoveDist;      //241
+	unsigned short XMotorSpeed;    //242
+	unsigned short YCirclingPulse; //243
+	unsigned short YMoveDist;      //244
+	unsigned short YMotorSpeed;    //245
+	unsigned short ZCirclingPulse; //246
+	unsigned short ZMoveDist;//247
+	unsigned short ZMotorSpeed;	
+	unsigned short UCirclingPulse;	
+	unsigned short UMoveDist;
+	unsigned short UMotorSpeed;
+}MortorParamStrct;
+
 typedef struct{
-    unsigned short testdata[10];
+    unsigned short testdata[10];   //400
     
 }TestData_str;
 
-typedef struct _PowerDownSaveStrct_
+typedef struct _PowerDownSaveStrct_   //涓庨�氫俊鏃犲叧
 {
 	long ZDistance;
 	unsigned short CrcDate;
 }PowerDownSaveStrct;
+
 #pragma packoption
+
 typedef enum _EParaAddr_
 {
     SYSTERMADDR  = 0,   //系统参数
@@ -129,9 +134,9 @@ typedef enum _EParaAddr_
 }EParaAddr;
 
 extern WORD_BITS RunAtcion;
-#define	 	bRBOrigin   RunAtcion.bits.b0	
-#define	 	NoAlarm		RunAtcion.bits.b1	
-#define    bAutoStart  RunAtcion.bits.b2
+#define	   bRBOrigin    RunAtcion.bits.b0	
+#define	   NoAlarm	RunAtcion.bits.b1	
+#define    bAutoStart   RunAtcion.bits.b2
 #define    bFengchiFlag RunAtcion.bits.b3
 #define    bAutoStop	RunAtcion.bits.b4
 
@@ -163,6 +168,7 @@ extern WORD_BITS RunAtcion;
 #define  bContues		M12 //一次，连续
 #define  bContuesST             M13 //一次，连续
 #define  bTest			M14
+#define  clear_param		M15
 
 #define  bRunDIST_St		M20
 #define  bRunDIST		M21
@@ -190,8 +196,8 @@ extern WORD_BITS RunAtcion;
 #define  bUorigin		M47
 
 #define bFirstWorkDisp_ST      M51
-#define bAlarmCode27    M52
-#define bAlarmCode29    M53
+#define bAlarmCode27           M52
+#define bAlarmCode29           M53
 
 #define bCurrentMode       M52 // 0  手动  1 准备状态
 #define bCurrentMode_ST    M53
@@ -208,7 +214,7 @@ extern WORD_BITS RunAtcion;
 #define MillingMotor_ST           M60  //铣电机
 #define DrillMotor_ST             M61  //铣电机
 #define StopperValve_ST           M67  //档料
-#define PressValve_ST            M68  //压料
+#define PressValve_ST             M68  //压料
 
 
 
