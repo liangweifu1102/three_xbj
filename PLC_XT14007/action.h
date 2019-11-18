@@ -165,12 +165,12 @@ extern WORD_BITS RunAtcion;
 #define  bWriteParam  	M09 //写参数
 #define  bDotMVST		M10 //点动
 #define  bZDotMVST		M11 //点动
-#define  bContues		M12 //一次，连续
-#define  bContuesST             M13 //一次，连续
+#define  read_success	M12 //一次，连续
+#define  write_success  M13 //一次，连续
 #define  bTest			M14
-#define  clear_param		M15
+#define  clear_param    M15
 
-#define  bRunDIST_St		M20
+#define  bRunDIST_St	M20
 #define  bRunDIST		M21
 
 #define bModel1			M22
@@ -209,14 +209,10 @@ extern WORD_BITS RunAtcion;
 #define bFirstWorkSelect         M58   // 0  先修后钻 1 先钻后修
 #define bFirstWorkSelect_ST      M59
 
-
-
 #define MillingMotor_ST           M60  //铣电机
 #define DrillMotor_ST             M61  //铣电机
 #define StopperValve_ST           M67  //档料
 #define PressValve_ST             M68  //压料
-
-
 
 #define EMG_STOP			X01 //急停
 #define AUTORUN_IN			X00 //启动

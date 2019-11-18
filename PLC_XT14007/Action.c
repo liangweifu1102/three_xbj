@@ -738,6 +738,12 @@ void SaveSetParamToFlash(void)
 {
    unsigned char buffertmp[512];//, i;
    unsigned short i = 0;
+   static unsigned long show_time=0;
+   if(show_time < dwTickCount)
+   {
+      write_success = 0;
+      read_success = 0;
+   }
    if (bWriteParam)
    {
       bWriteParam = 0;
@@ -748,10 +754,11 @@ void SaveSetParamToFlash(void)
       }
 
       {
-         EraseSector(SystemParam->WriteNum * 4096);
-         ProgramPage(SystemParam->WriteNum * 4096, FlashbufTmp);
+         EraseSector(SystemParam->ReadNum * 4096);
+         ProgramPage(SystemParam->ReadNum * 4096, FlashbufTmp);
       }
-
+      write_success = 1;
+      show_time = dwTickCount + 2000;
    }
    if (clear_param)
    {
@@ -857,6 +864,8 @@ void SaveSetParamToFlash(void)
          Write24C04(200 + i, buffertmp[i]);
       }
       */
+      read_success = 1;
+      show_time = dwTickCount + 2000;
    }
    if (RDMachParam)
    {
