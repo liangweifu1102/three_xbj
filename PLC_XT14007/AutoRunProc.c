@@ -1,4 +1,5 @@
 #include "Global.h"
+unsigned char motor_run_flg;
 unsigned char cRunStep ,cSlot2Step,cSawRunstep;
 unsigned short NextDlay;
 unsigned short NextStepDlay;
@@ -22,10 +23,395 @@ volatile long dwStartPosition = 0;
 volatile char bBacked = 0;
 long dwComparePluse = 0;
 unsigned char bWorkOk = 0;
-
 unsigned char cAlarmFlag = 0;
 
+unsigned short work_orign[20];
+unsigned short work_length[20];
+unsigned short work_depth[20];
+
 void AutoCalModel(void);
+
+
+void run_mech_posi(unsigned char axis, unsigned short speed, long mech_posi)
+{
+    MV_Set_Startv(axis, 10);
+    MV_Set_Speed(axis, speed);
+    dwRealPosi = MV_Get_Command_Pos(axis);
+    cSetPulse = mech_posi;
+    cSetPulse = PositionToPluse(axis, cSetPulse);
+    cSetPulse = cSetPulse - dwRealPosi;
+    MV_Pmov(axis, cSetPulse); 
+}
+
+void run_distance(unsigned char axis, unsigned short speed, long go_distance)
+{
+    MV_Set_Startv(axis, 10);
+    MV_Set_Speed(axis, speed);
+    cSetPulse = PositionToPluse(axis, go_distance);
+    MV_Pmov(axis, cSetPulse); 
+}
+
+unsigned char slot_num_count(void)
+{
+    unsigned char i;
+    unsigned char slot_num=0;
+    for (i=0; i<20; i++)
+    {
+        work_orign[i]=0;
+        work_length[i]=0;
+        work_depth[i]=0;
+    }
+    for (i = 0; i < 20; i++)
+    {
+        if (FactoryParam->Slot_Orign[i] != 0 && FactoryParam->Slot_Length[i] != 0 
+            && UserParam->Slot_Depth[i]!=0)
+       {
+            work_orign[slot_num]=FactoryParam->Slot_Orign[i];
+            work_length[slot_num]=FactoryParam->Slot_Length[i];
+            work_depth[slot_num]=UserParam->Slot_Depth[i];
+            slot_num++;
+       }
+    }
+    return slot_num;
+}
+
+void aotu_run(void)
+{
+    static unsigned long run_delay=0;
+    long set_dis;
+    static long cur_depth;
+
+    static unsigned char  all_slot_num;
+    static unsigned char  cur_slot_num;
+    static unsigned short cut_slot_depth;
+
+    if (bRunning)
+    {
+        switch (cRunStep)
+        {
+            case 1:
+                {
+                    run_mech_posi(Y_AXIS,UserParam->DeepthIdleSpeed,0);                   //y回零点
+                    run_mech_posi(Z_AXIS,UserParam->MillingRadius,0); 
+                cRunStep = 2;
+                }      
+                break;
+            case 2:
+                if (!Y_DRV && !Z_DRV)
+                {
+                    if (MotroParam->mode_lift == MODEXIUB)
+                   {
+                       if (MotroParam->mode_right == MODEXIUB)
+                       {
+                          
+                       }
+                       else if (MotroParam->mode_right == MODEXICAO)
+                       {
+                          
+                       }
+                       else
+                       {
+
+                       }
+                   }
+                   else if (MotroParam->mode_lift == MODEXICAO)
+                   {
+                       if (MotroParam->mode_right == MODEXIUB)
+                       {
+                           if (!motor_run_flg)
+                           {
+                               motor_run_flg=1;
+                               run_delay = dwTickCount + UserParam->MillingMotorStartTime * 100UL; 
+                               Y00=1;
+                               Y15=1;
+                               Y07=1;
+                               Y10=1;
+                           }
+                           else
+                           {
+                               Y07=1;
+                               Y10=1;
+                               run_delay = dwTickCount + UserParam->PressValveOpenTime * 100UL; 
+                           }
+                           cRunStep = 3;
+                           cur_depth=0;
+                       }
+                       else if (MotroParam->mode_right == MODEXICAO)
+                       {
+
+                       }
+                       else
+                       {
+
+                       }                  
+                   }
+                   else
+                   {
+                       if (MotroParam->mode_right == MODEXIUB)
+                       {
+
+                       }
+                       else if (MotroParam->mode_right == MODEXICAO)
+                       {
+
+                       }
+                       else
+                       {
+
+                       }   
+                   }
+                }
+               break;
+            case 3:
+                if (!Y_DRV)
+                {
+                    set_dis = FactoryParam->DrillSiteOrign-(UserParam->TrimingRadius/2);  //x到起点
+                    run_mech_posi(X_AXIS,UserParam->SiteIdleSpeed,set_dis);
+                    cRunStep = 4;
+                }             
+               break;
+           case 4:
+               if (!X_DRV)        //y到起点
+               {
+                   run_mech_posi(Y_AXIS,UserParam->DeepthIdleSpeed,FactoryParam->TrimingDeepthOrign); 
+                   cRunStep = 5;
+               }
+               break;
+           case 5:
+               if (!Y_DRV)        //y进深度
+               {
+                   if (!feed_xb)  //一次进刀
+                   {
+                       run_distance(Y_AXIS, UserParam->DrillFeedSpeed, UserParam->TrimingDeepth);
+                       cRunStep = 6;                       
+                   }
+                   else           //多次进刀
+                   {
+                       if ((UserParam->TrimingDeepth-cur_depth) > MotroParam->xb_one_feed)  //总-当前>一次进刀
+                       {    
+                           cur_depth += MotroParam->xb_one_feed;              
+                           run_distance(Y_AXIS, UserParam->DrillFeedSpeed, cur_depth); 
+                           cRunStep = 6;  
+                       }
+                       else  
+                       {
+                           cur_depth = UserParam->TrimingDeepth;
+                           run_distance(Y_AXIS, UserParam->DrillFeedSpeed, cur_depth);
+                           cRunStep = 6;  
+                       }
+                   }
+               }
+               break;
+            case 6:
+                if (!Y_DRV)    //x修边
+                {
+                    set_dis = UserParam->TrimingRadius + UserParam->TrimingLength;
+                    run_distance(X_AXIS,UserParam->TrimingSpeed,set_dis);
+                    cRunStep = 7;
+                }
+                break;
+            case 7:
+                if (!X_DRV)    //y退刀
+                {
+                    run_mech_posi(Y_AXIS,UserParam->DeepthIdleSpeed,0);
+                    cRunStep = 8;
+                }
+                break;
+            case 8:
+                if (!Y_DRV)
+                {
+                    if (!feed_xb)
+                    {
+                        cRunStep=9;
+                    }
+                    else
+                    {
+                        if (cur_depth>=UserParam->TrimingDeepth)
+                        {
+                            cRunStep=9;
+                        }
+                        else
+                        {
+                            cRunStep=3;
+                        }   
+                    }
+                }
+                break;
+            case 9:
+                Y00=0;
+                Y15=0;
+                run_delay = dwTickCount + 800; 
+                cRunStep = 10;
+                break;
+            case 10:
+                if (run_delay < dwTickCount)
+                {
+                    run_mech_posi(Z_AXIS,UserParam->MillingRadius,0);                   //Z回零点
+                    cRunStep = 11;
+                }
+                break;
+            case 11:
+                if (!Z_DRV)
+                {
+                    all_slot_num = slot_num_count();  
+                    if (all_slot_num>0)
+                    {
+                        cur_slot_num = all_slot_num-1;
+                        cRunStep = 12;
+                    }
+                    else    //预防没有设有孔的情况
+                    {
+                            
+                    }
+                }
+                break;
+            case 12:
+                {
+                    Y14=1;
+                    Y00=1;
+                    run_delay = dwTickCount + UserParam->DrillMotorStartTime * 100UL; 
+                    cRunStep = 13;  
+                    cut_slot_depth=0;
+                }
+                break;
+            case 13:
+                if (run_delay < dwTickCount)  //到槽位置
+                {
+                    set_dis = work_orign[cur_slot_num] + work_length[cur_slot_num];
+                    run_mech_posi(X_AXIS,UserParam->SiteIdleSpeed,set_dis);
+                    cRunStep = 14;
+                }
+                break;
+            case 14:
+                if (!X_DRV)     //到Z轴起点
+                {
+                    run_mech_posi(Z_AXIS,UserParam->MillingRadius,FactoryParam->DrillDeepthOrign);
+                    cRunStep = 15;
+                }
+                break;
+            case 15:
+                if (!Z_DRV)   //进刀深度
+                {
+                    if (!feed_xc)  //一次进刀
+                    {
+                        set_dis = work_depth[cur_slot_num];
+                        run_distance(Z_AXIS,UserParam->MillingSpeed,set_dis);
+                        cRunStep = 16;                    
+                    }
+                    else           //多次进刀
+                    {
+                        if ((work_depth[cur_slot_num]-cut_slot_depth) > MotroParam->xc_one_feed)  //总-当前>一次进刀
+                        {    
+                            cut_slot_depth += MotroParam->xc_one_feed;              
+                            run_distance(Z_AXIS, UserParam->MillingSpeed, cut_slot_depth); 
+                            cRunStep = 16;  
+                        }
+                        else  
+                        {
+                            cut_slot_depth = work_depth[cur_slot_num];
+                            run_distance(Z_AXIS, UserParam->MillingSpeed, cut_slot_depth);
+                            cRunStep = 16;  
+                        }
+                    }
+                }
+                break;
+            case 16:
+                if (!Z_DRV)  //铣槽
+                {
+                    set_dis = (-1) * work_length[cur_slot_num];
+                    run_distance(X_AXIS, UserParam->TrimingSpeed, set_dis);
+                    cRunStep = 17;
+                }
+                break;
+            case 17:
+                if (!X_DRV)   //退出
+                {
+                    run_mech_posi(Z_AXIS,UserParam->MillingRadius,0);
+                    cRunStep = 18;
+                }
+                break;
+            case 18:
+                if (!Z_DRV)
+                {
+                    if (!feed_xc)
+                    {
+                        cRunStep=19;
+                    }
+                    else
+                    {
+                        if (cut_slot_depth >= work_depth[cur_slot_num])
+                        {
+                            cRunStep=19;
+                        }
+                        else
+                        {
+                            cRunStep=13;
+                        }   
+                    }
+                }
+                break;
+            case 19:
+                if (cur_slot_num!=0)
+                {
+                    cur_slot_num--;
+                    cRunStep=13;
+                }
+                else
+                {
+                    cRunStep=20;
+                }
+                break;
+            case 20:
+                {
+                    run_mech_posi(X_AXIS,UserParam->SiteIdleSpeed,0);
+                    cRunStep = 21;
+                }
+                break;
+            case 21:
+                if (!X_DRV)
+                {
+                    run_delay = dwTickCount + MotroParam->no_work_time * 100UL; 
+                    cRunStep = 22;
+                }
+                break;
+            case 22:
+                if (run_delay < dwTickCount)
+                {
+                    motor_run_flg=0;
+                    Y00 = 0;
+                    Y14 = 0;
+                    Y15 = 0;
+                    cRunStep = 0;
+                    bRunning = 0;
+                }
+                break;
+            case 23:
+
+                break;
+            case 24:
+                break;
+
+           default:
+               break;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * �ŷ��жϣ����ڼ���ĳ�����
@@ -47,11 +433,11 @@ typedef struct
    long depth;
 } DrillsData;
 
-static long currentdeltaDeepth = 0;
+//static long currentdeltaDeepth = 0;
 static DrillsData drillWorks[15]; //��ӹ����ݻ���
 static DrillsData drillWorks2[15]; // ���в� �ӹ����ݻ���
 static char drillWorksCnt = 0;   //��ӹ�����
-static char oldMode = 0;
+//static char oldMode = 0;
 static char errorStep = 0;
  char curDrillIndex = 0;
 static char milliingDir = 0;

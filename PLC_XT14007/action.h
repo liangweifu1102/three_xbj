@@ -54,44 +54,50 @@ typedef struct _FactoryParamStrct_
 
 typedef struct _UserParamStrct_
 {
-        long   TrimingLength; //100 ÐÞ±ß³¤¶È
+    long   TrimingLength; //100 ÐÞ±ß³¤¶È
 	long   TrimingDeepth;
 	unsigned short  WorksDeltaSite[20]; //104 ¾à0µã¾àÀë		
 	unsigned short  WorksLength[20];    //124 ³¤¶È£¬²»Îª0µÄÊ±ºòÊÇ²Û	
 	unsigned short  WorksDepth[20];     //144 Éî¶È, ²»ÄÜÎª0	
-        unsigned short  res[6];//
-        long            StopperShift;       //170 µµÎöÆ«ÒÆ
-        unsigned short  MillingCycleTime;   //172 Ï³²ÛÔ²ÕûÊ±¼ä	
-        unsigned short  WorkMode;           //173 ¹¤×÷Ä£Ê½   
-        unsigned short  PressValveOpenTime;  //174  Ñ¹ÁÏ´ò¿ªÊ±¼ä
-        unsigned short  PressValveCloseTime;  //175  Ñ¹ÁÏ¹Ø±ÕÊ±¼ä
-        unsigned short  MillingMotorStartTime; //176  Ï³µç»úÆô¶¯Ê±¼ä
-        unsigned short  DrillMotorStartTime;//177    ×êµç»úÆô¶¯Ê±¼ä
-        unsigned short  DrillCycleTime;    //178  ×êÔ²ÕûÊ±¼ä
-        unsigned short  DrillKnifeOrign;   //179 ×êµ¶Ô­µã
-        unsigned short  MillingKnifeOrign; //180 Ï³µ¶Ô­µã
-        unsigned short  DrillHoleOrign;    //181 ×ê¿×Ô­µã
-        long            ObjectLength;      //182 ¹¤¼þ³¤¶È
-        long            MiddlePoint;       //184ÖÐ¼äµãÎ»ÖÃ
-        long            HeaderLength;      //186È¥Í·³¤¶È
-        long            EndHearLength;     //188È¥Í·³¤¶È
-        unsigned short  MillingInplcaeTime;//190 Ï³µ¶Ç°½øµ½Î»ºóµÈ´ýÊ±¼ä
-        unsigned short  MillingLockerTime;  //191 Ï³µ¶Ç°½øµ½Î»ºóµÈ´ýÊ±¼ä
-        unsigned short  MillingUnLockerTime;//192 Ï³µ¶Ç°½øµ½Î»ºóµÈ´ýÊ±¼ä
-        unsigned short  SiteIdleSpeed;      //193 Î»ÖÃ¿Õ×ßËÙ¶È 
-        unsigned short  DeepthIdleSpeed;    //194 Éî¶È¿Õ×ßËÙ¶È 
-        unsigned short  TrimingSpeed;       //195 ÐÞ±àËÙ¶È 
-        unsigned short  DrillFeedSpeed;         //196 ×êËÙ¶È 
-        unsigned short  MillingSpeed;       //197 ²ÛËÙ¶È 
-        unsigned short  MillingRadius;      //198 µ¶Ö±¾¶
-        unsigned short  MillingFeed;        //199 ²Û½ø¸ø
-        unsigned short  MillingFeedSpeed;   //200 ²ÛÇ°½ø¸øËÙ¶È 
-        unsigned short  TrimingFeedSpeed;   //201 ÐÞ±ß½ø¸øËÙ¶È 
-        unsigned short  TrimingRadius;      //202 ÐÞ±ßµ¶Ö±¾¶
-        unsigned short  DrillKnifeLength;//203
-        unsigned short  TrimingKnifeRadius;//204
-        unsigned short  res1[15];//
-        unsigned short  Slot_Depth[20];//220  ²ÛÖÐ²ÛÉî¶È¶È  ÒÑÂú
+    unsigned short  res[6];//
+    long            StopperShift;       //170 µµÎöÆ«ÒÆ
+    unsigned short  MillingCycleTime;   //172 Ï³²ÛÔ²ÕûÊ±¼ä	
+    unsigned short  WorkMode;           //173 ¹¤×÷Ä£Ê½   
+    unsigned short  PressValveOpenTime;  //174  Ñ¹ÁÏ´ò¿ªÊ±¼ä
+    unsigned short  PressValveCloseTime;  //175  Ñ¹ÁÏ¹Ø±ÕÊ±¼ä
+    unsigned short  MillingMotorStartTime; //176  Ï³µç»úÆô¶¯Ê±¼ä
+    unsigned short  DrillMotorStartTime;//177    ×êµç»úÆô¶¯Ê±¼ä
+    unsigned short  DrillCycleTime;    //178  ×êÔ²ÕûÊ±¼ä
+    unsigned short  DrillKnifeOrign;   //179 ×êµ¶Ô­µã
+    unsigned short  MillingKnifeOrign; //180 Ï³µ¶Ô­µã
+    unsigned short  DrillHoleOrign;    //181 ×ê¿×Ô­µã
+    long            ObjectLength;      //182 ¹¤¼þ³¤¶È
+    long            MiddlePoint;       //184ÖÐ¼äµãÎ»ÖÃ
+    long            HeaderLength;      //186È¥Í·³¤¶È
+    long            EndHearLength;     //188È¥Í·³¤¶È
+    unsigned short  MillingInplcaeTime;//190 Ï³µ¶Ç°½øµ½Î»ºóµÈ´ýÊ±¼ä
+    unsigned short  MillingLockerTime;  //191 Ï³µ¶Ç°½øµ½Î»ºóµÈ´ýÊ±¼ä
+    unsigned short  MillingUnLockerTime;//192 Ï³µ¶Ç°½øµ½Î»ºóµÈ´ýÊ±¼ä
+    unsigned short  SiteIdleSpeed;      //193 Xç©º
+    
+	unsigned short  DeepthIdleSpeed;    //194 Yç©º
+    
+	unsigned short  TrimingSpeed;       //195 xå·¥
+ 
+    unsigned short  DrillFeedSpeed;     //196yå·¥
+    
+	unsigned short  MillingSpeed;       //197 zå·¥
+ 
+    unsigned short  MillingRadius;      //198 Zç©º
+    
+	unsigned short  MillingFeed;        //199 
+    unsigned short  MillingFeedSpeed;   //200 ²ÛÇ°½ø¸øËÙ¶È 
+    unsigned short  TrimingFeedSpeed;   //201 ÐÞ±ß½ø¸øËÙ¶È 
+    unsigned short  TrimingRadius;      //202 ÐÞ±ßµ¶Ö±¾¶
+    unsigned short  DrillKnifeLength;//203
+    unsigned short  TrimingKnifeRadius;//204
+    unsigned short  res1[15];//
+    unsigned short  Slot_Depth[20];//220  ²ÛÖÐ²ÛÉî¶È¶È  ÒÑÂú
 
 }UserParamStrct;
 
@@ -104,11 +110,18 @@ typedef struct _MortorParamStrct_
 	unsigned short YMoveDist;      //244
 	unsigned short YMotorSpeed;    //245
 	unsigned short ZCirclingPulse; //246
-	unsigned short ZMoveDist;//247
-	unsigned short ZMotorSpeed;	
-	unsigned short UCirclingPulse;	
-	unsigned short UMoveDist;
-	unsigned short UMotorSpeed;
+	unsigned short ZMoveDist;      //247
+	unsigned short ZMotorSpeed;	   //248
+	unsigned short UCirclingPulse; //249	
+	unsigned short UMoveDist;      //250
+	unsigned short UMotorSpeed;    //251
+    unsigned short mode_lift;      //252
+    unsigned short mode_right;     //253
+    unsigned short xb_one_feed;    //254
+    unsigned short xc_one_feed;    //255
+    unsigned short x_acc_time;     //256
+    unsigned short x_dec_time;     //257
+    unsigned short no_work_time;   //258
 }MortorParamStrct;
 
 typedef struct{
@@ -167,8 +180,9 @@ extern WORD_BITS RunAtcion;
 #define  bZDotMVST		M11 //µã¶¯
 #define  read_success	M12 //Ò»´Î£¬Á¬Ðø
 #define  write_success  M13 //Ò»´Î£¬Á¬Ðø
-#define  bTest			M14
+#define  feed_xb	    M14
 #define  clear_param    M15
+#define  feed_xc        M16
 
 #define  bRunDIST_St	M20
 #define  bRunDIST		M21

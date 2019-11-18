@@ -33,7 +33,6 @@ PowerDownSaveStrct CurDistanceSave;
 
 
 unsigned short cRunDistStep;
-void aotu_run(void);
 void ReadRobotCurrent(void);
 void KeyBoardProc(void);
 void UserKeyBoardProc(void);
@@ -72,10 +71,6 @@ void Action(void)
 /*
   è‡ªåŠ¨è¿è¡Œç¨‹åº
 */
-void aotu_run(void)
-{
-
-}
 /************************************************/
 /*
 µ±Ç°Á½Öá×´Ì¬
@@ -177,6 +172,7 @@ void KeyBoardProc(void)
     {
         cAlarmFlag= 0;
 
+      motor_run_flg = 0;
       cResumeStep=0;
       bRBOrigin = 0;
       bAutoStart = 0;
@@ -822,19 +818,19 @@ void SaveSetParamToFlash(void)
       UserParam->TrimingLength <<= 8;
       UserParam->TrimingLength |= FlashbufTmp[100];
 
-       UserParam->TrimingDeepth = FlashbufTmp[103];
-       UserParam->TrimingDeepth <<= 8;
-       UserParam->TrimingDeepth |= FlashbufTmp[102];
+      UserParam->TrimingDeepth = FlashbufTmp[103];
+      UserParam->TrimingDeepth <<= 8;
+      UserParam->TrimingDeepth |= FlashbufTmp[102];
 
-         buffertmp[200] = UserParam->TrimingLength;
-         buffertmp[201] = UserParam->TrimingLength >> 8;
-         buffertmp[202] = UserParam->TrimingLength >> 16;
-         buffertmp[203] = UserParam->TrimingLength >> 24;
+      buffertmp[200] = UserParam->TrimingLength;
+      buffertmp[201] = UserParam->TrimingLength >> 8;
+      buffertmp[202] = UserParam->TrimingLength >> 16;
+      buffertmp[203] = UserParam->TrimingLength >> 24;
 
-         buffertmp[204] = UserParam->TrimingDeepth;
-         buffertmp[205] = UserParam->TrimingDeepth >> 8;
-         buffertmp[206] = UserParam->TrimingDeepth >> 16;
-         buffertmp[207] = UserParam->TrimingDeepth >> 24;
+      buffertmp[204] = UserParam->TrimingDeepth;
+      buffertmp[205] = UserParam->TrimingDeepth >> 8;
+      buffertmp[206] = UserParam->TrimingDeepth >> 16;
+      buffertmp[207] = UserParam->TrimingDeepth >> 24;
 
       for (i = 0; i < 40; i++)
       {

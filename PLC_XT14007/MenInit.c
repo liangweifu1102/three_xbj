@@ -75,8 +75,8 @@ void ServoSpeedInit(void)
    {
       X_ALARMEN = X_Axis_SV; //Çý¶¯Æ÷¹ÊÕÏÊ¹ÄÜ
       MV_Set_Range(X_AXIS, 100);
-      MV_Set_Acc(X_AXIS, 300);
-      MV_Set_Dec(X_AXIS, 300);
+      MV_Set_Acc(X_AXIS, 100 + MotroParam->x_acc_time);
+      MV_Set_Dec(X_AXIS, 100 + MotroParam->x_dec_time);
       MV_Set_Startv(X_AXIS, 10);
       MV_Set_Speed(X_AXIS, 400);
       MV_Set_Command_Pos(X_AXIS, 0);
