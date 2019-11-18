@@ -29,6 +29,11 @@ unsigned short work_orign[20];
 unsigned short work_length[20];
 unsigned short work_depth[20];
 
+unsigned char xc_frun_step;
+unsigned char xc_rrun_step;
+unsigned char xb_frun_step;
+unsigned char xb_rrun_step;
+
 void AutoCalModel(void);
 
 
@@ -74,6 +79,108 @@ unsigned char slot_num_count(void)
     }
     return slot_num;
 }
+
+void run_xc_forward(void)
+{
+
+}
+void run_xc_reverse(void)
+{
+
+}
+void run_xb_forward(void)
+{
+    switch (xb_frun_step)
+    {
+        case 1:
+        case 3:
+            if (!Y_DRV)
+            {
+                set_dis = FactoryParam->DrillSiteOrign-(UserParam->TrimingRadius/2);  //x到起点
+                run_mech_posi(X_AXIS,UserParam->SiteIdleSpeed,set_dis);
+                xb_frun_step = 4;
+            }             
+           break;
+        case 4:
+           if (!X_DRV)        //y到起点
+           {
+               run_mech_posi(Y_AXIS,UserParam->DeepthIdleSpeed,FactoryParam->TrimingDeepthOrign); 
+               xb_frun_step = 5;
+           }
+           break;
+        case 5:
+           if (!Y_DRV)        //y进深度
+           {
+               if (!feed_xb)  //一次进刀
+               {
+                   run_distance(Y_AXIS, UserParam->DrillFeedSpeed, UserParam->TrimingDeepth);
+                   xb_frun_step = 6;                       
+               }
+               else           //多次进刀
+               {
+                   if ((UserParam->TrimingDeepth-cur_depth) > MotroParam->xb_one_feed)  //总-当前>一次进刀
+                   {    
+                       cur_depth += MotroParam->xb_one_feed;              
+                       run_distance(Y_AXIS, UserParam->DrillFeedSpeed, cur_depth); 
+                       xb_frun_step = 6;  
+                   }
+                   else  
+                   {
+                       cur_depth = UserParam->TrimingDeepth;
+                       run_distance(Y_AXIS, UserParam->DrillFeedSpeed, cur_depth);
+                       xb_frun_step = 6;  
+                   }
+               }
+           }
+           break;
+        case 6:
+            if (!Y_DRV)    //x修边
+            {
+                set_dis = UserParam->TrimingRadius + UserParam->TrimingLength;
+                run_distance(X_AXIS,UserParam->TrimingSpeed,set_dis);
+                xb_frun_step = 7;
+            }
+            break;
+        case 7:
+            if (!X_DRV)    //y退刀
+            {
+                run_mech_posi(Y_AXIS,UserParam->DeepthIdleSpeed,0);
+                xb_frun_step = 8;
+            }
+            break;
+        case 8:
+            if (!Y_DRV)
+            {
+                if (!feed_xb)
+                {
+                    xb_frun_step=9;
+                }
+                else
+                {
+                    if (cur_depth>=UserParam->TrimingDeepth)
+                    {
+                        xb_frun_step=9;
+                    }
+                    else
+                    {
+                        xb_frun_step=3;
+                    }   
+                }
+            }
+            break;
+        case 9:
+            xb_frun_step = 0;
+            break;
+        default:
+            break;
+    }
+}
+
+void run_xb_reverse(void)
+{
+
+}
+
 
 void aotu_run(void)
 {
