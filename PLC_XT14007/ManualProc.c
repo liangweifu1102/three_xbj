@@ -621,7 +621,7 @@ void RebackOrigin(void)
       RebackZaxisOrign();
       if (!(bXRst || bYRst || bZRst) && !(X_DRV || Y_DRV || Z_DRV))
       {
-         bRBOrigin = 0;
+         
          NegLimit = PositionToPluse(X_AXIS, FactoryParam->XAxisNLimit);
          PosLimit = PositionToPluse(X_AXIS, FactoryParam->XAxisPLimit);
          MV_Set_Command_SlMTN(X_AXIS, NegLimit);
