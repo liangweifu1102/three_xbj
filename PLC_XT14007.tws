@@ -7,9 +7,13 @@
 [GENERAL_DATA]
 [BREAKPOINTS]
 [OPEN_WORKSPACE_FILES]
+"F:\www\three_axis\PLC_XT14007\AutoRunProc.c" 
 "F:\www\three_axis\PLC_XT14007\main.c" 
+"F:\www\three_axis\PLC_XT14007\MenInit.c" 
 [WORKSPACE_FILE_STATES]
-"F:\www\three_axis\PLC_XT14007\main.c" -8 -31 1261 376 1 1 
+"F:\www\three_axis\PLC_XT14007\AutoRunProc.c" -8 -31 1261 436 1 2 
+"F:\www\three_axis\PLC_XT14007\MenInit.c" 78 78 1141 263 0 3 
+"F:\www\three_axis\PLC_XT14007\main.c" 0 0 1261 376 0 1 
 [LOADED_PROJECTS]
 "PLC_XT14007" 
 [END]
