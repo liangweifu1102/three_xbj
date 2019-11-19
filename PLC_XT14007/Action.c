@@ -64,6 +64,7 @@ void Action(void)
    aotu_run();
    KeyBoardProc();
    ResumeLocation();
+   RebackOrigin();
    AlarmProtect();
    SaveSetParamToFlash();
 }
@@ -127,11 +128,11 @@ void KeyBoardProc(void)
       {
          ResetPeripheral();
          bAlarmCode29 = 0;
-         if (!bCurrentMode)  SystemParam->AlarmCode = 21;
-         if (!bTrimingSelect && !bDrillingSelect) SystemParam->AlarmCode = 26;
-         if (!StopperLmt) SystemParam->AlarmCode = 22;
-         if (!MillingOrign) SystemParam->AlarmCode = 23;
-         if (!DrillingOrign) SystemParam->AlarmCode = 25;
+       //  if (!bCurrentMode)  SystemParam->AlarmCode = 21;
+       //  if (!bTrimingSelect && !bDrillingSelect) SystemParam->AlarmCode = 26;
+        // if (!StopperLmt) SystemParam->AlarmCode = 22;
+        // if (!MillingOrign) SystemParam->AlarmCode = 23;
+        // if (!DrillingOrign) SystemParam->AlarmCode = 25;
 
          if (SystemParam->AlarmCode == 0)
          {
@@ -269,7 +270,7 @@ void ResumeLocation(void)
 {
 
    TestData->testdata[0]=cResumeStep;
-   TestData->testdata[1]=cResumeStep;
+   //TestData->testdata[1]=cResumeStep;
    if (bResume)
    {
       if (cResumeStep == 1)
@@ -333,6 +334,7 @@ void ResumeLocation(void)
       }
       else if ((cResumeStep == 11) && !(X_DRV) && !(bXRst))
       {
+         bRBOrigin = 0;
          cResumeStep = 12;
       }
       else if ((cResumeStep == 12) && !(X_DRV))// && !(Y_DRV))
@@ -698,7 +700,8 @@ void AlarmProtect(void)
     { 
         SystemParam->AlarmCode = 0;
     }
-    if (MillingMotorAlarm)
+
+    if (!MillingMotorAlarm)
     {
         SystemParam->AlarmCode = 30;
     }
@@ -707,14 +710,14 @@ void AlarmProtect(void)
         SystemParam->AlarmCode = 0;
     }
     
-    if (DrillMotorAlarm)
+   /* if (DrillMotorAlarm)
     {
         SystemParam->AlarmCode = 29;
     }
     else if (SystemParam->AlarmCode == 29) 
     {
         SystemParam->AlarmCode = 0;
-    }
+    }*/
     if (EMG_STOP)
     {
       SystemParam->AlarmCode = 2;
@@ -806,14 +809,6 @@ void SaveSetParamToFlash(void)
          buffertmp[289 + i * 2] = UserParam->WorksDepth[i] >> 8;
 
       }
-/*      UserParam->TrimingLength = FlashbufTmp[101 - USERADDR];
-      UserParam->TrimingLength <<= 8;
-      UserParam->TrimingLength |= FlashbufTmp[100 - USERADDR];
-
-       UserParam->TrimingDeepth = FlashbufTmp[103 - USERADDR];
-       UserParam->TrimingDeepth <<= 8;
-       UserParam->TrimingDeepth |= FlashbufTmp[102 - USERADDR];
-*/
       UserParam->TrimingLength = FlashbufTmp[101];
       UserParam->TrimingLength <<= 8;
       UserParam->TrimingLength |= FlashbufTmp[100];
@@ -845,7 +840,6 @@ void SaveSetParamToFlash(void)
        
       for (i = 200; i < 208; i++)
       {
-
          Write24C04(i, buffertmp[i]);
       }
       /*

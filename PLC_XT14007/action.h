@@ -33,11 +33,11 @@ typedef struct _FactoryParamStrct_
     long	UAxisNLimit; 		//XÖá¸º¼«ÏÞÎ»	//34
     unsigned short XAxisAlarmDir;//36 XÖá±¨¾¯µçÆ½ 0ÊÇ³£¿ª1ÊÇ³£±Õ
     unsigned short YAxisAlarmDir;//37 YÖá±¨¾¯µçÆ½ 0ÊÇ³£¿ª1ÊÇ³£±Õ
-    long        TrimingSiteOrign;//38   ÐÞ±ßÔ­µã
-    long        TrimingDeepthOrign;//40 ÐÞ±ßÉî¶ÈÔ­µã
-    long        DrillSiteOrign;    //42 ×ê¿×Ô­µã
-    long        DrillDeepthOrign;  //44 ×ê¿×Éî¶ÈÔ­µã
-    unsigned short DebugSwitch;//46
+    long        x_drill1_dis;    //38   ÐÞ±ßÔ­µã
+    long        dill_origin_dis1;//40    //é“£è¾¹åŽŸç‚¹
+    long        x_drill2_dis;    //42 ×ê¿×Ô­µã
+    long        dill_origin_dis2; //44×µ   //æ§½åŽŸç‚¹
+    unsigned short DebugSwitch;  //46
     unsigned short XAxisZeroSpeed;//47
     unsigned short YAxisZeroSpeed;//48
     unsigned short XAxisAutoZero;      //49
@@ -54,19 +54,19 @@ typedef struct _FactoryParamStrct_
 
 typedef struct _UserParamStrct_
 {
-    long   TrimingLength; //100 ÐÞ±ß³¤¶È
-	long   TrimingDeepth;
-	unsigned short  WorksDeltaSite[20]; //104 ¾à0µã¾àÀë		
-	unsigned short  WorksLength[20];    //124 ³¤¶È£¬²»Îª0µÄÊ±ºòÊÇ²Û	
-	unsigned short  WorksDepth[20];     //144 Éî¶È, ²»ÄÜÎª0	
+    long   TrimingLength;    //100 ÐÞ±ß³¤¶È
+    long   TrimingDeepth;    //102
+    unsigned short  WorksDeltaSite[20]; //104 ¾à0µã¾àÀë		
+    unsigned short  WorksLength[20];    //124 ³¤¶È£¬²»Îª0µÄÊ±ºòÊÇ²Û	
+    unsigned short  WorksDepth[20];     //144 Éî¶È, ²»ÄÜÎª0	
     unsigned short  res[6];//
     long            StopperShift;       //170 µµÎöÆ«ÒÆ
     unsigned short  MillingCycleTime;   //172 Ï³²ÛÔ²ÕûÊ±¼ä	
     unsigned short  WorkMode;           //173 ¹¤×÷Ä£Ê½   
     unsigned short  PressValveOpenTime;  //174  Ñ¹ÁÏ´ò¿ªÊ±¼ä
     unsigned short  PressValveCloseTime;  //175  Ñ¹ÁÏ¹Ø±ÕÊ±¼ä
-    unsigned short  MillingMotorStartTime; //176  Ï³µç»úÆô¶¯Ê±¼ä
-    unsigned short  DrillMotorStartTime;//177    ×êµç»úÆô¶¯Ê±¼ä
+    unsigned short  xb_motor_start_time; //176  Ï³µç»úÆô¶¯Ê±¼ä
+    unsigned short  xc_motor_start_time;//177    ×êµç»úÆô¶¯Ê±¼ä
     unsigned short  DrillCycleTime;    //178  ×êÔ²ÕûÊ±¼ä
     unsigned short  DrillKnifeOrign;   //179 ×êµ¶Ô­µã
     unsigned short  MillingKnifeOrign; //180 Ï³µ¶Ô­µã
@@ -78,21 +78,22 @@ typedef struct _UserParamStrct_
     unsigned short  MillingInplcaeTime;//190 Ï³µ¶Ç°½øµ½Î»ºóµÈ´ýÊ±¼ä
     unsigned short  MillingLockerTime;  //191 Ï³µ¶Ç°½øµ½Î»ºóµÈ´ýÊ±¼ä
     unsigned short  MillingUnLockerTime;//192 Ï³µ¶Ç°½øµ½Î»ºóµÈ´ýÊ±¼ä
-    unsigned short  SiteIdleSpeed;      //193 Xç©º
+    unsigned short  x_idl_speed;      //193 Xç©º
     
-	unsigned short  DeepthIdleSpeed;    //194 Yç©º
+    unsigned short  y_idl_speed;    //194 Yç©º
     
-	unsigned short  TrimingSpeed;       //195 xå·¥
+    unsigned short  x_work_speed;       //195 xå·¥
  
-    unsigned short  DrillFeedSpeed;     //196yå·¥
+    unsigned short  y_work_speed;     //196yå·¥
     
-	unsigned short  MillingSpeed;       //197 zå·¥
+    unsigned short  z_work_speed;       //197 zå·¥
  
-    unsigned short  MillingRadius;      //198 Zç©º
+    unsigned short  z_idl_speed;      //198 Zç©º
     
-	unsigned short  MillingFeed;        //199 
-    unsigned short  MillingFeedSpeed;   //200 ²ÛÇ°½ø¸øËÙ¶È 
-    unsigned short  TrimingFeedSpeed;   //201 ÐÞ±ß½ø¸øËÙ¶È 
+    unsigned short x_acc_time;     //199
+    unsigned short x_dec_time;     //200
+    unsigned short no_work_time;   //201
+
     unsigned short  TrimingRadius;      //202 ÐÞ±ßµ¶Ö±¾¶
     unsigned short  DrillKnifeLength;//203
     unsigned short  TrimingKnifeRadius;//204
@@ -119,9 +120,6 @@ typedef struct _MortorParamStrct_
     unsigned short mode_right;     //253
     unsigned short xb_one_feed;    //254
     unsigned short xc_one_feed;    //255
-    unsigned short x_acc_time;     //256
-    unsigned short x_dec_time;     //257
-    unsigned short no_work_time;   //258
 }MortorParamStrct;
 
 typedef struct{
@@ -249,17 +247,19 @@ extern WORD_BITS RunAtcion;
 #define DrillingLmt              X04// X17 //×êÏÞÎ»
 #define DrillingOrign            X03//    X20 //×êÔ­µã
 #define OilSgn                   X10
-#define	 U_SAlarm_In		X34
+#define	 U_SAlarm_In		 X34
 
 //M160~M192ÎªÊäÈëÎ»ÏÔÊ¾
 #define X_Origin			I011
-#define Y_Origin			I003
-#define Z_Origin			I014
+#define Y_Origin			I013
+#define Z_Origin			I003
+
 #define U_Origin			X37
 
 #define X_HLMTP_IN			X12
-#define Y_HLMTP_IN			X04
-#define Z_HLMTP_IN			X13
+#define Y_HLMTP_IN			X14
+#define Z_HLMTP_IN			X04
+
 #define U_HLMTP_IN			X35
 
 #define	 X_SAlarm_In		X27
@@ -287,7 +287,7 @@ extern WORD_BITS RunAtcion;
 //#define bAlarmFlag      M50
 
 
-#define TrimingSoftOrign  FactoryParam->TrimingDeepthOrign - (UserParam->TrimingRadius / 2) - UserParam->StopperShift
+#define TrimingSoftOrign  800
 #define DrillingSoftOrign  FactoryParam->DrillDeepthOrign - UserParam->DrillKnifeLength - UserParam->StopperShift
 
 extern unsigned short    PreMenuSel;

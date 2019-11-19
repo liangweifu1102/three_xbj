@@ -20,7 +20,7 @@ void InitVariable(void)
 {
    unsigned short ch, k;
    memset(cDataArea, 0, 512 * 2);
-   for (ch = 0; ch < 255; ch++)
+   for (ch = 0; ch < 512; ch++)
    {
       k = (ch << 1);
       cDataArea[ch] = ((unsigned short)Read24C04(k + 1) << 8) + Read24C04(k);
@@ -46,10 +46,6 @@ void InitVariable(void)
    MotroParam->XCirclingPulse = 10000;
    MotroParam->YCirclingPulse = 10000;
    MotroParam->ZCirclingPulse = 10000;
-   if (UserParam->TrimingRadius < 10000 || UserParam->TrimingRadius > 25000)
-   {
-      UserParam->TrimingRadius = 15000;
-   }
    if (FactoryParam->XAxisAutoZero > 1)
    {
       FactoryParam->XAxisAutoZero = 0;
@@ -75,8 +71,8 @@ void ServoSpeedInit(void)
    {
       X_ALARMEN = X_Axis_SV; //Çý¶¯Æ÷¹ÊÕÏÊ¹ÄÜ
       MV_Set_Range(X_AXIS, 100);
-      MV_Set_Acc(X_AXIS, 100 + MotroParam->x_acc_time);
-      MV_Set_Dec(X_AXIS, 100 + MotroParam->x_dec_time);
+      MV_Set_Acc(X_AXIS, 100 + UserParam->x_acc_time);
+      MV_Set_Dec(X_AXIS, 100 + UserParam->x_dec_time);
       MV_Set_Startv(X_AXIS, 10);
       MV_Set_Speed(X_AXIS, 400);
       MV_Set_Command_Pos(X_AXIS, 0);
