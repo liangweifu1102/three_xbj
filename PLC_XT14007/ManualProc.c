@@ -33,6 +33,7 @@ void RebackUaxisOrign(void);
 void ManualAction(void)
 {
    //if ((!bRunning) && (!bRBOrigin) && (!bResume) && (!AutoModeSgn))
+   if (!ready_state)
    {
       ManualProc_XAxis();
       ManualProc_YAxis();

@@ -25,7 +25,7 @@ void main(void)
 	{	
 		ReadInput();
 		CalGearRatio();
-		//ServoDrvProct();
+		ServoDrvProct();
 		//TestOutput();
 		Action();
 		WriteOutput();

@@ -11,6 +11,7 @@
 #define bWorkMode1 M90
 #define bWorkMode2 M91
 #define bWorkMode3 M93
+#define MOTOR_SWITCH__TIME 500
 extern unsigned char motor_run_flg;
 extern char curDrillIndex;
 extern unsigned char cAlarmFlag;
