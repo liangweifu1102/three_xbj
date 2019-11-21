@@ -599,10 +599,16 @@ void run_xb_fore_reve(void)
         case 7:
             if (!X_DRV)    //y退刀
             {
-                set_dis = FactoryParam->dill_origin_dis1 - UserParam->board_distance - UserParam->drill1_radius - FactoryParam->safe_dis;
-                run_mech_posi(Y_AXIS, UserParam->y_idl_speed, set_dis);
-                set_dis = FactoryParam->dill_origin_dis2 - UserParam->board_distance - UserParam->drill2_radius - FactoryParam->safe_dis;
-                run_mech_posi(Z_AXIS, UserParam->z_idl_speed, set_dis);
+                if (feed_count%2==0)
+                {
+                    set_dis = FactoryParam->dill_origin_dis1 - UserParam->board_distance - UserParam->drill1_radius - FactoryParam->safe_dis;
+                    run_mech_posi(Y_AXIS, UserParam->y_idl_speed, set_dis);
+                }
+                else
+                {
+                    set_dis = FactoryParam->dill_origin_dis2 - UserParam->board_distance - UserParam->drill2_radius - FactoryParam->safe_dis;
+                    run_mech_posi(Z_AXIS, UserParam->z_idl_speed, set_dis);
+                }
                 xb_f_r_step = 8;
             }
             break;

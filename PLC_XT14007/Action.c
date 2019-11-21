@@ -723,10 +723,13 @@ void AlarmProtect(void)
             }
          }
     }
-    else if (SystemParam->AlarmCode == 3) 
-    { 
+    else 
+    {
+       if (SystemParam->AlarmCode == 3)
+       { 
         SystemParam->AlarmCode = 0;
-        gas_alarm_delay=5000;
+       }
+       gas_alarm_delay=5000;
     }
 
     if (!X10)
@@ -742,10 +745,13 @@ void AlarmProtect(void)
            }
         }
    }
-   else if (SystemParam->AlarmCode == 21) 
-   { 
-       SystemParam->AlarmCode = 0;
-       oil_alarm_delay=5000;
+   else 
+   {
+      if (SystemParam->AlarmCode == 21) 
+      { 
+          SystemParam->AlarmCode = 0;
+      }
+      oil_alarm_delay=5000;
    }
 
 
