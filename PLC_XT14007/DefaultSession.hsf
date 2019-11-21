@@ -674,8 +674,12 @@
 [WINDOW_POSITION_STATE_DATA_VD4]
 [WINDOW_Z_ORDER]
 <<<<<<< HEAD
+<<<<<<< HEAD
 "F:\www\three_axis\PLC_XT14007\action.h" 
 =======
+>>>>>>> aotu
+=======
+"F:\www\three_axis\PLC_XT14007\Action.c" 
 >>>>>>> aotu
 "F:\www\three_axis\PLC_XT14007\AutoRunProc.c" 
 "F:\www\three_axis\PLC_XT14007\main.c" 

@@ -59,7 +59,12 @@ void Timer0TickISR( void )
 //			SCI0_RxIntEn();
 		}
 	}
-	if(NextDlay) NextDlay--;
+
+	 if(gas_alarm_delay) gas_alarm_delay--;
+	 if(oil_alarm_delay) oil_alarm_delay--;
+	  
+
+	 if(NextDlay) NextDlay--;
 	if(ServorDlay) ServorDlay--;
 	if(NextStepDlay) NextStepDlay--;
 	if(RstPphlDlay)RstPphlDlay--;

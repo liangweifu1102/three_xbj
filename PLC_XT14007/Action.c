@@ -31,6 +31,8 @@ UserParamStrct *UserParam;
 TestData_str *TestData;
 PowerDownSaveStrct CurDistanceSave;
 
+unsigned long gas_alarm_delay;
+unsigned long oil_alarm_delay;
 
 unsigned short cRunDistStep;
 void ReadRobotCurrent(void);
@@ -121,7 +123,7 @@ void KeyBoardProc(void)
 {
    unsigned char buffer[4], i;
 
-   if ((bStart) || (X00 && bOldX00 == 0)) //����
+   if ((bStart) || (X00 && bOldX00 == 0) && ready_state) //����
    {
       bStart = 0;
       if ((!bRunning) && (!bRBOrigin) && (!bResume) && (SystemParam->AlarmCode == 0))
@@ -141,6 +143,12 @@ void KeyBoardProc(void)
          }
 
       }
+   }
+   if (ready)
+   {
+      ready=0;
+      ready_state = ~ready_state;
+      Y07 = ready_state;
    }
    /*
    if (X03)
@@ -282,17 +290,12 @@ void ResumeLocation(void)
       }
       else if ((cResumeStep == 2) && (RstPphlDlay == 0))
       {
-         //MillingValve = 0;
-         //DrillValve = 0;
-         DrillMotor = 0;
-         MillingMotor = 0;
-         PressValve = 1;
-         StopperValve = 0;
+         cOutputVal1.Val=0;  //关闭所有输出
          cResumeStep = 3;
       }
       else if ((cResumeStep == 3))
       {
-         //if (OnceOnpowerFLG)
+         if (OnceOnpowerFLG)
          {
             bRBOrigin = 1;
             bYRst = 1;
@@ -303,6 +306,10 @@ void ResumeLocation(void)
             cZRstStep = 1;
             cResumeStep = 10;
          }
+         else
+         {
+            cResumeStep=4;
+         }
       }
       else if (cResumeStep == 4)
       {
@@ -311,9 +318,16 @@ void ResumeLocation(void)
          dwRealPosi = MV_Get_Command_Pos(Y_AXIS);
          cSetPulse = 0 - dwRealPosi;
          MV_Pmov(Y_AXIS, cSetPulse);
+
+         MV_Set_Startv(Z_AXIS, 10);
+         MV_Set_Speed(Z_AXIS, FactoryParam->ZAxisZeroSpeed);
+         dwRealPosi = MV_Get_Command_Pos(Z_AXIS);
+         cSetPulse = 0 - dwRealPosi;
+         MV_Pmov(Z_AXIS, cSetPulse);
+
          cResumeStep = 5;
       }
-      else if (cResumeStep == 5 && !(Y_DRV))
+      else if (cResumeStep == 5 && !(Y_DRV) && !Z_DRV)
       {
          MV_Set_Startv(X_AXIS, 10);
          MV_Set_Speed(X_AXIS, FactoryParam->YAxisZeroSpeed);
@@ -324,7 +338,7 @@ void ResumeLocation(void)
       }
       else if ((cResumeStep == 6) && !(X_DRV))
       {
-         cResumeStep = 10;
+         cResumeStep = 12;
       }
       else if ((cResumeStep == 10) && !(Y_DRV || Z_DRV) && !(bYRst || bZRst))
       {
@@ -337,9 +351,10 @@ void ResumeLocation(void)
          bRBOrigin = 0;
          cResumeStep = 12;
       }
-      else if ((cResumeStep == 12) && !(X_DRV))// && !(Y_DRV))
+      else if ((cResumeStep == 12) && !(X_DRV))
       {
          OnceOnpowerFLG = 0;
+         ready_state=0;
          cResumeStep = 0;
          bResume = 0;
       }
@@ -445,6 +460,7 @@ void AlarmProtect(void)
          {
             bRunning = 0;
             MV_Dec_Stop(X_AXIS);
+            cOutputVal1.Val=0;  //关闭所有输出
             cRunStep = 0;
          }
       }
@@ -515,6 +531,7 @@ void AlarmProtect(void)
          {
             bRunning = 0;
             MV_Dec_Stop(Y_AXIS);
+            cOutputVal1.Val=0;  //关闭所有输出
             cRunStep = 0;
          }
       }
@@ -584,6 +601,7 @@ void AlarmProtect(void)
             bRunning = 0;
             bStop = 1;
             MV_Dec_Stop(Z_AXIS);
+            cOutputVal1.Val=0;  //关闭所有输出
             cRunStep = 0;
          }
       }
@@ -692,18 +710,60 @@ void AlarmProtect(void)
       if (SystemParam->AlarmCode == 7) SystemParam->AlarmCode = 0;
    }
 */
-    if (GasSgn)
+     if (GasSgn)
+     {
+         SystemParam->AlarmCode = 3;
+         if (gas_alarm_delay==0)
+         {
+            if (bRunning)
+            {
+               bRunning = 0;
+               cRunStep = 0;
+               cOutputVal1.Val=0;  //关闭所有输出
+            }
+         }
+    }
+    else 
     {
-        SystemParam->AlarmCode = 3;
-    }
-    else if (SystemParam->AlarmCode == 3) 
-    { 
+       if (SystemParam->AlarmCode == 3)
+       { 
         SystemParam->AlarmCode = 0;
+       }
+       gas_alarm_delay=5000;
     }
+
+    if (!X10)
+    {
+        SystemParam->AlarmCode = 21;
+        if (oil_alarm_delay==0)
+        {
+           if (bRunning)
+           {
+              bRunning = 0;
+              cRunStep = 0;
+              cOutputVal1.Val=0;  //关闭所有输出
+           }
+        }
+   }
+   else 
+   {
+      if (SystemParam->AlarmCode == 21) 
+      { 
+          SystemParam->AlarmCode = 0;
+      }
+      oil_alarm_delay=5000;
+   }
+
 
     if (!MillingMotorAlarm)
     {
         SystemParam->AlarmCode = 30;
+        if (bRunning)
+        {
+           bRunning = 0;
+           cRunStep = 0;
+           cOutputVal1.Val=0;  //关闭所有输出
+        }
     }
     else if (SystemParam->AlarmCode == 30) 
     {
@@ -923,7 +983,7 @@ void CalGearRatio(void)
    MotroParam->UMotorSpeed = 1200;
 
    //if (MotroParam->XCirclingPulse == 0) 
-   MotroParam->XCirclingPulse = 10000;
+   MotroParam->XCirclingPulse = 5000;
    //if (MotroParam->YCirclingPulse == 0) 
    MotroParam->YCirclingPulse = 10000;
    //if (MotroParam->ZCirclingPulse == 0) 

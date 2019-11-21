@@ -34,10 +34,10 @@ typedef struct _FactoryParamStrct_
     unsigned short XAxisAlarmDir;//36 XÖá±¨¾¯µçÆ½ 0ÊÇ³£¿ª1ÊÇ³£±Õ
     unsigned short YAxisAlarmDir;//37 YÖá±¨¾¯µçÆ½ 0ÊÇ³£¿ª1ÊÇ³£±Õ
     long        x_drill1_dis;    //38   ÐÞ±ßÔ­µã
-    long        dill_origin_dis1;//40    //é“£è¾¹åŽŸç‚¹
+    long        dill_origin_dis1;//40    //
     long        x_drill2_dis;    //42 ×ê¿×Ô­µã
-    long        dill_origin_dis2; //44×µ   //æ§½åŽŸç‚¹
-    unsigned short DebugSwitch;  //46
+    long        dill_origin_dis2; //44×µ   //
+    unsigned short safe_dis;   //46
     unsigned short XAxisZeroSpeed;//47
     unsigned short YAxisZeroSpeed;//48
     unsigned short XAxisAutoZero;      //49
@@ -60,7 +60,7 @@ typedef struct _UserParamStrct_
     unsigned short  WorksLength[20];    //124 ³¤¶È£¬²»Îª0µÄÊ±ºòÊÇ²Û	
     unsigned short  WorksDepth[20];     //144 Éî¶È, ²»ÄÜÎª0	
     unsigned short  res[6];//
-    long            StopperShift;       //170 µµÎöÆ«ÒÆ
+    long            board_distance;          //170 µµÎöÆ«ÒÆ
     unsigned short  MillingCycleTime;   //172 Ï³²ÛÔ²ÕûÊ±¼ä	
     unsigned short  WorkMode;           //173 ¹¤×÷Ä£Ê½   
     unsigned short  PressValveOpenTime;  //174  Ñ¹ÁÏ´ò¿ªÊ±¼ä
@@ -77,7 +77,7 @@ typedef struct _UserParamStrct_
     long            EndHearLength;     //188È¥Í·³¤¶È
     unsigned short  MillingInplcaeTime;//190 Ï³µ¶Ç°½øµ½Î»ºóµÈ´ýÊ±¼ä
     unsigned short  MillingLockerTime;  //191 Ï³µ¶Ç°½øµ½Î»ºóµÈ´ýÊ±¼ä
-    unsigned short  MillingUnLockerTime;//192 Ï³µ¶Ç°½øµ½Î»ºóµÈ´ýÊ±¼ä
+    unsigned short  xc_work_speed;    //192 Ï³µ¶Ç°½øµ½Î»ºóµÈ´ýÊ±¼ä
     unsigned short  x_idl_speed;      //193 Xç©º
     
     unsigned short  y_idl_speed;    //194 Yç©º
@@ -92,10 +92,11 @@ typedef struct _UserParamStrct_
     
     unsigned short x_acc_time;     //199
     unsigned short x_dec_time;     //200
-    unsigned short no_work_time;   //201
 
-    unsigned short  TrimingRadius;      //202 ÐÞ±ßµ¶Ö±¾¶
-    unsigned short  DrillKnifeLength;//203
+    unsigned short xb_yuxi_dis;   //201
+
+    unsigned short  drill1_radius;      //202 ÐÞ±ßµ¶Ö±¾¶
+    unsigned short  drill2_radius;      //203
     unsigned short  TrimingKnifeRadius;//204
     unsigned short  res1[15];//
     unsigned short  Slot_Depth[20];//220  ²ÛÖÐ²ÛÉî¶È¶È  ÒÑÂú
@@ -181,6 +182,9 @@ extern WORD_BITS RunAtcion;
 #define  feed_xb	    M14
 #define  clear_param    M15
 #define  feed_xc        M16
+
+#define  ready          M17
+#define  ready_state    M18
 
 #define  bRunDIST_St	M20
 #define  bRunDIST		M21
@@ -301,6 +305,9 @@ extern unsigned short   PrevShouqian1;
 extern unsigned short   PrevShouqian2;
 extern unsigned short   Shouqian1Flag;
 extern unsigned short 	MSecondtime;
+
+extern unsigned long gas_alarm_delay;
+extern unsigned long oil_alarm_delay;
 
 extern unsigned char OnceOnpowerFLG,NOAirFLG;	//µÚÒ»´ÎÉÏµç±êÖ¾
 extern unsigned char RebackXYFLG;
