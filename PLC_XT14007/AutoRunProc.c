@@ -33,6 +33,7 @@ unsigned char xc_frun_step;
 unsigned char xc_rrun_step;
 unsigned char xb_frun_step;
 unsigned char xb_rrun_step;
+unsigned char xb2_rrun_step;
 
 unsigned char xb_f_r_step;
 
@@ -234,7 +235,14 @@ void run_xc_forward(void)  //要改
             }
             break;
         case 20:
-            xc_frun_step=0;
+             run_mech_posi(Y_AXIS,UserParam->y_idl_speed,0);
+             xc_frun_step=21;
+            break;
+        case 21:
+            if (!Y_DRV)
+            {
+                xc_frun_step=0;
+            }
             break;
         default:
             break;
@@ -287,14 +295,16 @@ void run_xc_reverse(void)
         case 13:
             if (1)  //到槽位置
             {
-                set_dis = work_orign[cur_slot_num] + work_length[cur_slot_num];
-                run_mech_posi(X_AXIS,(UserParam->x_idl_speed*0.6),set_dis);
+                set_dis = work_orign[cur_slot_num] + work_length[cur_slot_num];    //貌似有问题
+                
+				run_mech_posi(X_AXIS,UserParam->x_idl_speed,set_dis);
                 xc_rrun_step = 14;
             }
             break;
         case 14:
             if (!X_DRV && xc_rec_delay < dwTickCount)     //到Z轴起点
-            {
+            
+			{
                 set_dis = FactoryParam->dill_origin_dis2 - UserParam->board_distance - UserParam->drill2_radius;
                 run_mech_posi(Z_AXIS,UserParam->z_idl_speed,set_dis);
                 xc_rrun_step = 15;
@@ -375,7 +385,14 @@ void run_xc_reverse(void)
             }
             break;
         case 20:
-            xc_rrun_step=0;
+            run_mech_posi(Z_AXIS, UserParam->z_idl_speed, 0);
+            xc_rrun_step=21;
+            break;
+        case 21:
+            if (!Z_DRV)
+            {
+                xc_rrun_step=0;
+            }
             break;
         default:
             break;
@@ -407,8 +424,6 @@ void run_xb_forward(void)
                 set_dis = FactoryParam->x_drill1_dis - UserParam->xb_yuxi_dis;  //x到起点
 				
 				run_mech_posi(X_AXIS,UserParam->x_idl_speed,set_dis);
-                set_dis = FactoryParam->dill_origin_dis1 - UserParam->board_distance - UserParam->drill1_radius;
-                run_mech_posi(Y_AXIS,UserParam->y_idl_speed,set_dis); 
                 xb_frun_step = 4;
             }             
            break;
@@ -416,7 +431,8 @@ void run_xb_forward(void)
            if (!X_DRV && xb_forw_delay<dwTickCount)        //y到起点
            
 		   {
-               
+               set_dis = FactoryParam->dill_origin_dis1 - UserParam->board_distance - UserParam->drill1_radius;
+               run_mech_posi(Y_AXIS,UserParam->y_idl_speed,set_dis);              
                xb_frun_step = 5;
            }
            break;
@@ -484,7 +500,14 @@ void run_xb_forward(void)
             }
             break;
         case 9:
-            xb_frun_step = 0;
+            run_mech_posi(Y_AXIS, UserParam->y_idl_speed, 0);
+            xb_frun_step = 10;
+            break;
+        case 10:
+            if (!Y_DRV)
+            {
+                xb_frun_step=0;
+            }
             break;
         default:
             break;
@@ -510,12 +533,13 @@ void run_xb_fore_reve(void)
             xb_f_r_delay = dwTickCount + UserParam->xb_motor_start_time * 100UL; 
             Y00=1;
             Y15=1;
+            run_mech_posi(Z_AXIS, UserParam->z_idl_speed, 0);
             Y07=0;
             Y10=1;
             xb_f_r_step = 3;
             break;
         case 3:
-            if (xb_f_r_delay<dwTickCount)
+            if (xb_f_r_delay < dwTickCount && !Z_DRV)
             {
                 if (feed_count%2==1)
                 {
@@ -529,22 +553,23 @@ void run_xb_fore_reve(void)
 				
 				run_mech_posi(X_AXIS,UserParam->x_idl_speed,set_dis);
 
-                if (feed_count%2==1)
-                {
-                    set_dis = FactoryParam->dill_origin_dis2 - UserParam->board_distance - UserParam->drill2_radius;
-                    run_mech_posi(Z_AXIS, UserParam->z_idl_speed,set_dis);                   
-                }
-                else
-                {
-                    set_dis = FactoryParam->dill_origin_dis1-UserParam->board_distance - UserParam->drill1_radius;
-                    run_mech_posi(Y_AXIS, UserParam->y_idl_speed,set_dis);
-                }
                 xb_f_r_step = 4;
             }             
            break;
         case 4:
            if (!X_DRV)        //y到起点
            {
+               if (feed_count%2==1)
+               {
+                   set_dis = FactoryParam->dill_origin_dis2 - UserParam->board_distance - UserParam->drill2_radius;
+                   run_mech_posi(Z_AXIS, UserParam->z_idl_speed,set_dis);                   
+               }
+               else
+               {
+                   set_dis = FactoryParam->dill_origin_dis1-UserParam->board_distance - UserParam->drill1_radius;
+                   run_mech_posi(Y_AXIS, UserParam->y_idl_speed,set_dis);
+               }
+
                xb_f_r_step = 5;
            }
            break;
@@ -652,6 +677,7 @@ void run_xb_fore_reve(void)
                 {
                     Y00 = 1;
                     Y14=1;
+                    run_mech_posi(Y_AXIS, UserParam->y_idl_speed, 0);
                     xb_f_r_step = 12;
                     xb_f_r_delay = dwTickCount + UserParam->xb_motor_start_time * 100UL; 
                 }
@@ -662,7 +688,7 @@ void run_xb_fore_reve(void)
             }
             break;
         case 12:
-            if (xb_f_r_delay < dwTickCount)
+            if (xb_f_r_delay < dwTickCount && !Y_DRV)
             {
                 xb_f_r_step=3;
             }
@@ -673,7 +699,7 @@ void run_xb_fore_reve(void)
 }
 
 
-void run_xb_reverse(void)//要改
+void run_xb_reverse(void)
 {
     long set_dis;
     static long cur_depth;
@@ -695,14 +721,15 @@ void run_xb_reverse(void)//要改
                 set_dis += UserParam->TrimingLength;  
                 run_mech_posi(X_AXIS,UserParam->x_idl_speed,set_dis);
 
-                set_dis = FactoryParam->dill_origin_dis2 - UserParam->board_distance - UserParam->drill2_radius;
-                run_mech_posi(Z_AXIS,UserParam->z_idl_speed,set_dis); 
                 xb_rrun_step = 4;
             }             
            break;
         case 4:
            if (!X_DRV)        //到起点
            {
+                set_dis = FactoryParam->dill_origin_dis2 - UserParam->board_distance - UserParam->drill2_radius;
+                run_mech_posi(Z_AXIS,UserParam->z_idl_speed,set_dis); 
+
                xb_rrun_step = 5;
            }
            break;
@@ -770,7 +797,127 @@ void run_xb_reverse(void)//要改
             }
             break;
         case 9:
-            xb_rrun_step = 0;
+            run_mech_posi(Z_AXIS, UserParam->z_idl_speed, 0);
+            xb_rrun_step = 10;
+            break;
+        case 10:
+            if (!Z_DRV)
+            {
+                xb_rrun_step=0;
+            }
+            break;
+        default:
+            break;
+    }
+
+}
+
+void run_xb2_reverse(void)
+{
+    long set_dis;
+    static long cur_depth;
+    static unsigned long xb_reve_delay;
+
+    switch (xb2_rrun_step)
+    {
+        case 1:
+            cur_depth=0;
+            xb2_rrun_step=3;
+            xb_reve_delay = dwTickCount + UserParam->xb_motor_start_time * 100UL; 
+            Y00=1;
+            Y14=1;
+            break;
+        case 3:
+            if (1)
+            {
+                set_dis = FactoryParam->x_drill2_dis + UserParam->xb_yuxi_dis;
+                set_dis += UserParam->TrimingLength;  
+                run_mech_posi(X_AXIS,UserParam->x_idl_speed,set_dis);
+
+                xb2_rrun_step = 4;
+            }             
+           break;
+        case 4:
+           if (!X_DRV)        //到起点
+           {
+                set_dis = FactoryParam->dill_origin_dis2 - UserParam->board_distance - UserParam->drill2_radius;
+                run_mech_posi(Z_AXIS,UserParam->z_idl_speed,set_dis); 
+
+               xb2_rrun_step = 5;
+           }
+           break;
+        case 5:
+           if (!Z_DRV && xb_reve_delay<dwTickCount)        //y进深度
+           {
+               if (!feed_xb2)  //一次进刀
+               {
+                   run_distance(Z_AXIS, UserParam->z_work_speed, UserParam->xb2_all_depth);
+                   xb2_rrun_step = 6;                       
+               }
+               else           //多次进刀
+               {
+                   if ((UserParam->xb2_all_depth-cur_depth) > UserParam->xb2_one_depth)  //总-当前>一次进刀
+                   {    
+                       cur_depth += UserParam->xb2_one_depth;              
+                       run_distance(Z_AXIS, UserParam->z_work_speed, cur_depth); 
+                       xb2_rrun_step = 6;  
+                   }
+                   else  
+                   {
+                       cur_depth = UserParam->xb2_all_depth;
+                       run_distance(Z_AXIS, UserParam->z_work_speed, cur_depth);
+                       xb2_rrun_step = 6;  
+                   }
+               }
+           }
+           break;
+        case 6:
+            if (!Z_DRV)    
+            {
+                set_dis = UserParam->TrimingLength + (UserParam->xb_yuxi_dis*2UL);
+                set_dis *= (-1);
+                run_distance(X_AXIS,UserParam->x_work_speed,set_dis);
+                xb2_rrun_step = 7;
+            }
+            break;
+        case 7:
+            if (!X_DRV)    //y退刀
+            {
+                set_dis = FactoryParam->dill_origin_dis2 - UserParam->board_distance - UserParam->drill2_radius - FactoryParam->safe_dis;
+                run_mech_posi(Z_AXIS, UserParam->z_idl_speed, set_dis);
+                xb2_rrun_step = 8;
+            }
+            break;
+        case 8:
+            if (!Z_DRV)
+            {
+                if (!feed_xb2)
+                {
+                    xb2_rrun_step=9;
+                }
+                else
+                {
+                    if (cur_depth >= UserParam->xb2_all_depth)
+                    {
+                        xb2_rrun_step=9;
+                        cur_depth=0;
+                    }
+                    else
+                    {
+                        xb2_rrun_step=3;
+                    }   
+                }
+            }
+            break;
+        case 9:
+            run_mech_posi(Z_AXIS, UserParam->z_idl_speed, 0);
+            xb2_rrun_step = 10;
+            break;
+        case 10:
+            if (!Z_DRV)
+            {
+                xb2_rrun_step=0;
+            }
             break;
         default:
             break;
@@ -803,7 +950,7 @@ void aotu_run(void)
                        if (MotroParam->mode_right == MODEXIUB)//ok
                        {
                            cRunStep = 33;
-                           xb_f_r_step = 1;
+                           xb_frun_step = 1;
                        }
                        else if (MotroParam->mode_right == MODEXICAO)//OK
                        {
@@ -947,9 +1094,29 @@ void aotu_run(void)
                 }
                 break;
 
-            case 33:      //修边修边
-                run_xb_fore_reve();
-                if (xb_f_r_step==0)
+            case 33:      
+                run_xb_forward();
+                if (xb_frun_step==0)
+                {
+                    cRunStep=34;
+                }
+                break;
+            case 34:
+                Y00=0;
+                Y15=0;
+                run_delay = dwTickCount + MOTOR_SWITCH__TIME; 
+                cRunStep = 35;
+                break;
+            case 35:
+                if (run_delay < dwTickCount)
+                {
+                    cRunStep = 36;
+                    xb2_rrun_step = 1;
+                }
+                break;
+            case 36:
+                run_xb2_reverse();
+                if (xb2_rrun_step==0)
                 {
                     cRunStep=80;
                 }

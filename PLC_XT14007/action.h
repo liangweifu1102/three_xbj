@@ -70,8 +70,8 @@ typedef struct _UserParamStrct_
     unsigned short  DrillCycleTime;    //178  钻圆整时间
     unsigned short  DrillKnifeOrign;   //179 钻刀原点
     unsigned short  MillingKnifeOrign; //180 铣刀原点
-    unsigned short  DrillHoleOrign;    //181 钻孔原点
-    long            ObjectLength;      //182 工件长度
+    unsigned short  xb2_one_depth;      //181 钻孔原点
+    unsigned long   xb2_all_depth;      //182 工件长度
     long            MiddlePoint;       //184中间点位置
     long            HeaderLength;      //186去头长度
     long            EndHearLength;     //188去头长度
@@ -185,6 +185,8 @@ extern WORD_BITS RunAtcion;
 
 #define  ready          M17
 #define  ready_state    M18
+
+#define  feed_xb2       M19
 
 #define  bRunDIST_St	M20
 #define  bRunDIST		M21

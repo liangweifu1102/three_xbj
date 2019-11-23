@@ -665,9 +665,21 @@
 [WINDOW_POSITION_STATE_DATA_VD3]
 [WINDOW_POSITION_STATE_DATA_VD4]
 [WINDOW_Z_ORDER]
-"F:\www\three_axis\PLC_XT14007\Action.c" 
 "F:\www\three_axis\PLC_XT14007\AutoRunProc.c" 
+"F:\www\three_axis\PLC_XT14007\ManualProc.c" 
 "F:\www\three_axis\PLC_XT14007\main.c" 
+"F:\www\three_axis\PLC_XT14007\inout.c" 
+"F:\www\three_axis\PLC_XT14007\ServoDrv.h" 
+"F:\www\three_axis\PLC_XT14007\spi.h" 
+"F:\www\three_axis\PLC_XT14007\modusASC.h" 
+"F:\www\three_axis\PLC_XT14007\MenInit.h" 
+"F:\www\three_axis\PLC_XT14007\modbusASC.c" 
+"F:\www\three_axis\PLC_XT14007\i2c_24c04.h" 
+"F:\www\three_axis\PLC_XT14007\Global.h" 
+"F:\www\three_axis\PLC_XT14007\AutoRunProc.h" 
+"F:\www\three_axis\PLC_XT14007\action.h" 
+"F:\www\three_axis\PLC_XT14007\inout.h" 
+"F:\www\three_axis\PLC_XT14007\Action.c" 
 "F:\www\three_axis\PLC_XT14007\MenInit.c" 
 "{WK_00000001_DIFFERENCE} WINDOW" 
 [TARGET_NAME]

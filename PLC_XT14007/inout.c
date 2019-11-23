@@ -926,8 +926,53 @@ void TestOutput(void)
   }
 }
 
+void selset_mode(void)
+{
+	if (MotroParam->mode_lift == MODEXIUB)
+   {
+	   if (MotroParam->mode_right == MODEXIUB)
+	   {
+		   Y02 = Y14 | Y15;
+		   Y03 = 0;
+	   }
+	   else if (MotroParam->mode_right == MODEXICAO)
+	   {
+		   Y02 = Y14;
+		   Y03 = Y15;
+	   }
+	}
+	else if (MotroParam->mode_lift == MODEXICAO)
+	{
+		if (MotroParam->mode_right == MODEXIUB)
+		{
+			Y02 = Y15;
+			Y03 = Y14;
+		}
+		else if (MotroParam->mode_right == MODEXICAO)
+		{
+			Y02 = 0;
+			Y03 = Y14 | Y15;
+		}
+	}
+	else
+	{
+		if (MotroParam->mode_right == MODEXIUB)
+		{
+			Y02 = Y15;
+			Y03 = 0;
+		}
+		else if (MotroParam->mode_right == MODEXICAO)
+		{
+			Y02 = 0;
+			Y03 = Y15;
+		}
+	}
+
+}
+
 void WriteOutput(void)
 {
+    selset_mode();
 	OUT00 = !Y00;	
 	OUT01 = !Y01;	
 	OUT02 = !Y02;	
