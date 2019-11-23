@@ -1,4 +1,4 @@
-Optimizing Linkage Editor (V.10.02.00.000)        21-Nov-2019 10:04:50
+Optimizing Linkage Editor (V.10.02.00.000)        23-Nov-2019 12:02:56
 
 *** Options ***
 
@@ -43,21 +43,21 @@ Optimizing Linkage Editor (V.10.02.00.000)        21-Nov-2019 10:04:50
 SECTION                            START      END         SIZE   ALIGN
 
 B_1
-                                  00000000  00004046      4047   1
+                                  00000000  00004047      4048   1
 R_1
-                                  00004047  00004257       211   1
+                                  00004048  00004258       211   1
 B_2
-                                  00004258  000058df      1688   2
+                                  0000425a  000058e1      1688   2
 R_2
-                                  000058e0  000058e9         a   2
+                                  000058e2  000058eb         a   2
 B
-                                  000058ec  00005eab       5c0   4
+                                  000058ec  00005eb3       5c8   4
 R
-                                  00005eac  00005ed3        28   4
+                                  00005eb4  00005edb        28   4
 SU
-                                  00005ed4  00005fd3       100   4
+                                  00005edc  00005fdb       100   4
 SI
-                                  00005fd4  000062d3       300   4
+                                  00005fdc  000062db       300   4
 PResetPRG
                                   fffc0000  fffc0034        35   1
 C_1
@@ -79,14 +79,14 @@ D_2
 D
                                   fffd0684  fffd06ab        28   4
 P
-                                  fffd06ac  fffd7d4a      769f   1
+                                  fffd06ac  fffd80fd      7a52   1
 PIntPRG
-                                  fffd7d4b  fffd7e88       13e   1
+                                  fffd80fe  fffd823b       13e   1
 W
-                                  fffd7e8c  fffd7e8c         0   4
+                                  fffd823c  fffd823c         0   4
 W_1
-                                  fffd7e8c  fffd7e8c         0   1
+                                  fffd823c  fffd823c         0   1
 W_2
-                                  fffd7e8c  fffd7f25        9a   2
+                                  fffd823c  fffd82d9        9e   2
 FIXEDVECT
                                   ffffffd0  ffffffff        30   4

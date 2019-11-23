@@ -869,18 +869,18 @@ void SaveSetParamToFlash(void)
          buffertmp[289 + i * 2] = UserParam->WorksDepth[i] >> 8;
 
       }
-      UserParam->TrimingLength = FlashbufTmp[101];
-      UserParam->TrimingLength <<= 8;
-      UserParam->TrimingLength |= FlashbufTmp[100];
+    //  UserParam->TrimingLength = FlashbufTmp[101];
+    //  UserParam->TrimingLength <<= 8;
+    //  UserParam->TrimingLength |= FlashbufTmp[100];
 
       UserParam->TrimingDeepth = FlashbufTmp[103];
       UserParam->TrimingDeepth <<= 8;
       UserParam->TrimingDeepth |= FlashbufTmp[102];
 
-      buffertmp[200] = UserParam->TrimingLength;
-      buffertmp[201] = UserParam->TrimingLength >> 8;
-      buffertmp[202] = UserParam->TrimingLength >> 16;
-      buffertmp[203] = UserParam->TrimingLength >> 24;
+   //   buffertmp[200] = UserParam->TrimingLength;
+   //   buffertmp[201] = UserParam->TrimingLength >> 8;
+    //  buffertmp[202] = UserParam->TrimingLength >> 16;
+    //  buffertmp[203] = UserParam->TrimingLength >> 24;
 
       buffertmp[204] = UserParam->TrimingDeepth;
       buffertmp[205] = UserParam->TrimingDeepth >> 8;
