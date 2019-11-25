@@ -23,7 +23,7 @@ void main(void)
 	ServoSpeedInit();
 	while(1)
 	{	
-		ReadInput();
+		ReadInput(); 
 		CalGearRatio();
 		ServoDrvProct();
 		//TestOutput();
