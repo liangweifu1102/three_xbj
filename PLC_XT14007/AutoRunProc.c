@@ -112,7 +112,7 @@ void run_xc_forward(void)  //要改
     {
         case 1:
         case 10:
-            if (1)
+           // if (1)
             {
                 run_mech_posi(Y_AXIS,UserParam->y_idl_speed,0);                   //Z回零点
                 xc_frun_step = 11;
@@ -129,7 +129,7 @@ void run_xc_forward(void)  //要改
                 }
                 else    //预防没有设有孔的情况
                 {
-
+                   SystemParam->AlarmCode = 22;
                 }
             }
             break;
@@ -262,7 +262,7 @@ void run_xc_reverse(void)
     {
         case 1:
         case 10:
-            if (1)
+            //if (1)
             {
                 run_mech_posi(Z_AXIS,UserParam->z_idl_speed,0);                   //Z回零点
                 xc_rrun_step = 11;
@@ -279,7 +279,7 @@ void run_xc_reverse(void)
                 }
                 else    //预防没有设有孔的情况
                 {
-                        
+                    SystemParam->AlarmCode = 22;    
                 }
             }
             break;
@@ -293,17 +293,15 @@ void run_xc_reverse(void)
             }
             break;
         case 13:
-            if (1)  //到槽位置
+            //if (1)  //到槽位置
             {
                 set_dis = work_orign[cur_slot_num] + work_length[cur_slot_num];    //貌似有问题
-                
 				run_mech_posi(X_AXIS,UserParam->x_idl_speed,set_dis);
                 xc_rrun_step = 14;
             }
             break;
         case 14:
             if (!X_DRV && xc_rec_delay < dwTickCount)     //到Z轴起点
-            
 			{
                 set_dis = FactoryParam->dill_origin_dis2 - UserParam->board_distance - UserParam->drill2_radius;
                 run_mech_posi(Z_AXIS,UserParam->z_idl_speed,set_dis);
@@ -715,7 +713,7 @@ void run_xb_reverse(void)
             Y14=1;
             break;
         case 3:
-            if (1)
+           // if (1)
             {
                 set_dis = FactoryParam->x_drill2_dis + UserParam->xb_yuxi_dis;
                 set_dis += UserParam->TrimingLength;  
@@ -949,7 +947,7 @@ void aotu_run(void)
                    {
                        if (MotroParam->mode_right == MODEXIUB)//ok
                        {
-                           cRunStep = 33;
+                           cRunStep = 33;  
                            xb_frun_step = 1;
                        }
                        else if (MotroParam->mode_right == MODEXICAO)//OK
@@ -1281,5 +1279,6 @@ void SawAction(void)
 /************************************************/
 void AutoRun(void)
 {
+
 }
 

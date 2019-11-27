@@ -173,8 +173,14 @@ void KeyBoardProc(void)
         bStop = 0;
         cAlarmFlag = 1;
         if(SystemParam->AlarmCode == 8)
+        {
             SystemParam->AlarmCode = 0;
-
+        }
+        else if (SystemParam->AlarmCode == 22)
+        {
+           SystemParam->AlarmCode = 0;
+        }
+        
    }
 
     if(cAlarmFlag > 0)
