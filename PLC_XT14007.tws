@@ -21,16 +21,18 @@
 "F:\www\three_axis\PLC_XT14007\MenInit.h" 
 "F:\www\three_axis\PLC_XT14007\modbusASC.c" 
 "F:\www\three_axis\PLC_XT14007\modusASC.h" 
+"F:\www\three_axis\PLC_XT14007\ServoDrv.c" 
 "F:\www\three_axis\PLC_XT14007\ServoDrv.h" 
 "F:\www\three_axis\PLC_XT14007\spi.h" 
 [WORKSPACE_FILE_STATES]
 "F:\www\three_axis\PLC_XT14007\Action.c" 0 0 1261 436 0 4 
-"F:\www\three_axis\PLC_XT14007\AutoRunProc.c" -8 -31 1261 436 1 2 
+"F:\www\three_axis\PLC_XT14007\AutoRunProc.c" 0 0 1261 436 0 2 
 "F:\www\three_axis\PLC_XT14007\AutoRunProc.h" 26 26 1115 267 0 7 
 "F:\www\three_axis\PLC_XT14007\Global.h" 52 52 1115 267 0 8 
-"F:\www\three_axis\PLC_XT14007\ManualProc.c" 104 104 1115 267 0 16 
+"F:\www\three_axis\PLC_XT14007\ManualProc.c" 0 0 1261 436 0 16 
 "F:\www\three_axis\PLC_XT14007\MenInit.c" 78 78 1141 263 0 3 
 "F:\www\three_axis\PLC_XT14007\MenInit.h" 130 130 1115 267 0 11 
+"F:\www\three_axis\PLC_XT14007\ServoDrv.c" -8 -31 1261 436 1 17 
 "F:\www\three_axis\PLC_XT14007\ServoDrv.h" 52 52 1115 267 0 14 
 "F:\www\three_axis\PLC_XT14007\action.h" 0 0 1115 267 0 6 
 "F:\www\three_axis\PLC_XT14007\i2c_24c04.h" 78 78 1115 267 0 9 

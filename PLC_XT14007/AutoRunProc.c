@@ -290,6 +290,7 @@ void run_xc_reverse(void)
                 xc_rec_delay = dwTickCount + UserParam->xc_motor_start_time * 100UL; 
                 xc_rrun_step = 13;  
                 cut_slot_depth=0;
+                MV_Dec_Stop(X_AXIS);
             }
             break;
         case 13:
@@ -713,6 +714,7 @@ void run_xb_reverse(void)
             xb_reve_delay = dwTickCount + UserParam->xb_motor_start_time * 100UL; 
             Y00=1;
             Y14=1;
+            MV_Dec_Stop(X_AXIS);
             break;
         case 3:
             if (xb_reve_delay<dwTickCount)
@@ -826,6 +828,7 @@ void run_xb2_reverse(void)
             xb_reve_delay = dwTickCount + UserParam->xb_motor_start_time * 100UL; 
             Y00=1;
             Y14=1;
+            MV_Dec_Stop(X_AXIS);
             break;
         case 3:
             if (xb_reve_delay<dwTickCount)
