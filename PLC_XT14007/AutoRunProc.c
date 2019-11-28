@@ -296,12 +296,14 @@ void run_xc_reverse(void)
             //if (1)  //到槽位置
             {
                 set_dis = work_orign[cur_slot_num] + work_length[cur_slot_num];    //貌似有问题
+				
 				run_mech_posi(X_AXIS,UserParam->x_idl_speed,set_dis);
                 xc_rrun_step = 14;
             }
             break;
         case 14:
             if (!X_DRV && xc_rec_delay < dwTickCount)     //到Z轴起点
+			
 			{
                 set_dis = FactoryParam->dill_origin_dis2 - UserParam->board_distance - UserParam->drill2_radius;
                 run_mech_posi(Z_AXIS,UserParam->z_idl_speed,set_dis);
