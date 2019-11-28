@@ -1,4 +1,4 @@
-Optimizing Linkage Editor (V.10.02.00.000)        27-Nov-2019 21:03:00
+Optimizing Linkage Editor (V.10.02.00.000)        28-Nov-2019 12:43:17
 
 *** Options ***
 
@@ -79,14 +79,14 @@ D_2
 D
                                   fffd0684  fffd06ab        28   4
 P
-                                  fffd06ac  fffd811a      7a6f   1
+                                  fffd06ac  fffd8111      7a66   1
 PIntPRG
-                                  fffd811b  fffd8258       13e   1
+                                  fffd8112  fffd824f       13e   1
 W
-                                  fffd825c  fffd825c         0   4
+                                  fffd8250  fffd8250         0   4
 W_1
-                                  fffd825c  fffd825c         0   1
+                                  fffd8250  fffd8250         0   1
 W_2
-                                  fffd825c  fffd82f9        9e   2
+                                  fffd8250  fffd82ed        9e   2
 FIXEDVECT
                                   ffffffd0  ffffffff        30   4

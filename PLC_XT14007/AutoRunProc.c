@@ -293,7 +293,7 @@ void run_xc_reverse(void)
             }
             break;
         case 13:
-            //if (1)  //到槽位置
+            if (xc_rec_delay < dwTickCount)  //到槽位置
             {
                 set_dis = work_orign[cur_slot_num] + work_length[cur_slot_num];    //貌似有问题
 				
@@ -302,7 +302,7 @@ void run_xc_reverse(void)
             }
             break;
         case 14:
-            if (!X_DRV && xc_rec_delay < dwTickCount)     //到Z轴起点
+            if (!X_DRV)     //到Z轴起点
 			
 			{
                 set_dis = FactoryParam->dill_origin_dis2 - UserParam->board_distance - UserParam->drill2_radius;
@@ -419,7 +419,7 @@ void run_xb_forward(void)
 
 		    break;
         case 3:
-            if (!Y_DRV)
+            if (xb_forw_delay<dwTickCount)
             {
                 set_dis = FactoryParam->x_drill1_dis - UserParam->xb_yuxi_dis;  //x到起点
 				
@@ -428,7 +428,7 @@ void run_xb_forward(void)
             }             
            break;
         case 4:
-           if (!X_DRV && xb_forw_delay<dwTickCount)        //y到起点
+           if (!X_DRV)        //y到起点
            
 		   {
                set_dis = FactoryParam->dill_origin_dis1 - UserParam->board_distance - UserParam->drill1_radius;
@@ -715,7 +715,7 @@ void run_xb_reverse(void)
             Y14=1;
             break;
         case 3:
-           // if (1)
+            if (xb_reve_delay<dwTickCount)
             {
                 set_dis = FactoryParam->x_drill2_dis + UserParam->xb_yuxi_dis;
                 set_dis += UserParam->TrimingLength;  
@@ -734,7 +734,7 @@ void run_xb_reverse(void)
            }
            break;
         case 5:
-           if (!Z_DRV && xb_reve_delay<dwTickCount)        //y进深度
+           if (!Z_DRV)        //y进深度
            {
                if (!feed_xb)  //一次进刀
                {
@@ -828,7 +828,7 @@ void run_xb2_reverse(void)
             Y14=1;
             break;
         case 3:
-            if (1)
+            if (xb_reve_delay<dwTickCount)
             {
                 set_dis = FactoryParam->x_drill2_dis + UserParam->xb_yuxi_dis;
                 set_dis += UserParam->TrimingLength;  
@@ -847,7 +847,7 @@ void run_xb2_reverse(void)
            }
            break;
         case 5:
-           if (!Z_DRV && xb_reve_delay<dwTickCount)        //y进深度
+           if (!Z_DRV)        //y进深度
            {
                if (!feed_xb2)  //一次进刀
                {
