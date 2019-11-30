@@ -145,7 +145,7 @@ void run_xc_forward(void)  //要改
             }
             break;
         case 13:
-            if (xc_rec_delay < dwTickCount)  //到槽位置
+            if (1)  //到槽位置
             {
                 set_dis = work_orign[cur_slot_num];
                 run_mech_posi(X_AXIS,UserParam->x_idl_speed,set_dis);
@@ -153,7 +153,7 @@ void run_xc_forward(void)  //要改
             }
             break;
         case 14:
-            if (!X_DRV)     //到起点
+            if (!X_DRV && xc_rec_delay < dwTickCount)     //到起点
             {
                 set_dis = FactoryParam->dill_origin_dis1-UserParam->board_distance-UserParam->drill1_radius;
                 run_mech_posi(Y_AXIS,UserParam->y_idl_speed,set_dis);
@@ -294,7 +294,7 @@ void run_xc_reverse(void)
             }
             break;
         case 13:
-            if (xc_rec_delay < dwTickCount)  //到槽位置
+            if (1)  //到槽位置
             {
                 set_dis = work_orign[cur_slot_num] + work_length[cur_slot_num];    //貌似有问题
 				
@@ -303,7 +303,7 @@ void run_xc_reverse(void)
             }
             break;
         case 14:
-            if (!X_DRV)     //到Z轴起点
+            if (!X_DRV && xc_rec_delay < dwTickCount)     //到Z轴起点
 			
 			{
                 set_dis = FactoryParam->dill_origin_dis2 - UserParam->board_distance - UserParam->drill2_radius;
@@ -420,7 +420,7 @@ void run_xb_forward(void)
 
 		    break;
         case 3:
-            if (xb_forw_delay<dwTickCount)
+            if (1)
             {
                 set_dis = FactoryParam->x_drill1_dis - UserParam->xb_yuxi_dis;  //x到起点
 				
@@ -429,7 +429,7 @@ void run_xb_forward(void)
             }             
            break;
         case 4:
-           if (!X_DRV)        //y到起点
+           if (!X_DRV && xb_forw_delay<dwTickCount)        //y到起点
            
 		   {
                set_dis = FactoryParam->dill_origin_dis1 - UserParam->board_distance - UserParam->drill1_radius;
@@ -717,7 +717,7 @@ void run_xb_reverse(void)
             MV_Dec_Stop(X_AXIS);
             break;
         case 3:
-            if (xb_reve_delay<dwTickCount)
+            if (1)
             {
                 set_dis = FactoryParam->x_drill2_dis + UserParam->xb_yuxi_dis;
                 set_dis += UserParam->TrimingLength;  
@@ -727,7 +727,7 @@ void run_xb_reverse(void)
             }             
            break;
         case 4:
-           if (!X_DRV)        //到起点
+           if (!X_DRV && xb_reve_delay<dwTickCount)        //到起点
            {
                 set_dis = FactoryParam->dill_origin_dis2 - UserParam->board_distance - UserParam->drill2_radius;
                 run_mech_posi(Z_AXIS,UserParam->z_idl_speed,set_dis); 
@@ -831,7 +831,7 @@ void run_xb2_reverse(void)
             MV_Dec_Stop(X_AXIS);
             break;
         case 3:
-            if (xb_reve_delay<dwTickCount)
+            if (1)
             {
                 set_dis = FactoryParam->x_drill2_dis + UserParam->xb_yuxi_dis;
                 set_dis += UserParam->TrimingLength;  
@@ -841,7 +841,7 @@ void run_xb2_reverse(void)
             }             
            break;
         case 4:
-           if (!X_DRV)        //到起点
+           if (!X_DRV && xb_reve_delay<dwTickCount)        //到起点
            {
                 set_dis = FactoryParam->dill_origin_dis2 - UserParam->board_distance - UserParam->drill2_radius;
                 run_mech_posi(Z_AXIS,UserParam->z_idl_speed,set_dis); 
@@ -950,7 +950,13 @@ void aotu_run(void)
                 {
                     if (MotroParam->mode_lift == MODEXIUB)
                    {
-                       if (MotroParam->mode_right == MODEXIUB)//ok
+                        if (UserParam->TrimingLength==0)
+                        {
+                            SystemParam->AlarmCode = 22;
+                            cRunStep=0;
+                            break;
+                        }
+                        if (MotroParam->mode_right == MODEXIUB) //ok
                        {
                            cRunStep = 33;  
                            xb_frun_step = 1;
@@ -972,6 +978,12 @@ void aotu_run(void)
                    {
                        if (MotroParam->mode_right == MODEXIUB)//
                        {
+                           if (UserParam->TrimingLength==0)
+                           {
+                               SystemParam->AlarmCode = 22;
+                               cRunStep=0;
+                               break;
+                           }
                            cRunStep = 3;
                            xb_frun_step = 1;
                        }
